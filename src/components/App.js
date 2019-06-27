@@ -1,19 +1,26 @@
-import Main from './Main'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as actionCreators from '../redux/actions'
-import { withRouter } from 'react-router'
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import Main from './Main';
+import { getCategories } from '../actions/category';
+import { getItemsInCategory, getItemInCategory } from '../actions/item';
 
 function mapStateToProp(state) {
-    return {
-        categories: state.categories,
-        items: state.items
-    }
+  return {
+    category: state.category,
+    item: state.item,
+  };
 }
 
-function mapDispatchToProp(dispatch) {
-    return bindActionCreators(actionCreators, dispatch)
-}
+const mapDispatchToProp = {
+  getCategories,
+  getItemsInCategory,
+  getItemInCategory,
+};
 
-const App = withRouter(connect(mapStateToProp, mapDispatchToProp)(Main))
-export default App
+const App = withRouter(
+  connect(
+    mapStateToProp,
+    mapDispatchToProp,
+  )(Main),
+);
+export default App;
