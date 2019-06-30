@@ -38,7 +38,10 @@ class ItemInformationModal extends Component {
   }
 
   componentDidMount() {
-    this.validateData(this.state.title);
+    // Only execute when edit item
+    if (!this.state.createItem) {
+      this.validateData(this.state.title);
+    }
   }
 
   updateTitleInputProps = (validity) => {
@@ -99,6 +102,7 @@ class ItemInformationModal extends Component {
             description: description.value,
           })
           .then(() => {
+            //.. Reload
             this.props.showSuccessModal();
             this.props.handleClose();
           })
@@ -181,6 +185,7 @@ class ItemInformationModal extends Component {
   }
 }
 
+//.. Consider again
 const mapDispatchToProp = {
   createItemInCategory,
   editItemInCategory,

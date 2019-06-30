@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { ButtonToolbar, Button } from 'react-bootstrap';
 import EditItemModal from './modals/ItemInformationModal';
 import SuccessModal from './modals/SuccessModal';
+import ConfirmModal from './modals/ConfirmModal';
 
 class ItemDetail extends Component {
   constructor(props) {
@@ -10,6 +12,7 @@ class ItemDetail extends Component {
     this.state = {
       showInfoModal: false,
       showSuccessModal: false,
+      showConfirmModal: false,
       categoryId,
       itemId,
     };
@@ -18,6 +21,15 @@ class ItemDetail extends Component {
   componentDidMount() {
     const { categoryId, itemId } = this.state;
     this.props.getItemInCategory(categoryId, itemId);
+  }
+
+  deleteItem = (e) => {
+    e.preventDefault();
+    const { categoryId, itemId } = this.state;
+    this.props.deleteItemInCategory(categoryId, itemId).then(() => {
+      this.handleConfirmClose();
+      this.handleSuccessShow();
+    }).catch();
   }
 
   handleInfoShow = () => {
@@ -36,11 +48,19 @@ class ItemDetail extends Component {
     this.setState({ showSuccessModal: false });
   };
 
+  handleConfirmShow = () => {
+    this.setState({ showConfirmModal: true });
+  };
+
+  handleConfirmClose = () => {
+    this.setState({ showConfirmModal: false });
+  };
+
   render() {
     const { item } = this.props;
     const itemDetail = item.data[0];
     if (itemDetail) {
-      const { showInfoModal, showSuccessModal, categoryId } = this.state;
+      const { showInfoModal, showSuccessModal, showConfirmModal, categoryId } = this.state;
       return (
         <div>
           <div className="article-preview">
@@ -57,13 +77,23 @@ class ItemDetail extends Component {
               <p>{itemDetail.description}</p>
               {!itemDetail.description && <p><i>No description</i></p>}
               <span>
-                <button
-                  className="btn btn-sm btn-outline-primary"
-                  type="button"
-                  onClick={this.handleInfoShow}
-                >
-                Edit
-                </button>
+                <ButtonToolbar className="modal-footer">
+
+                  <Button
+                    variant="outline-success"
+                    size="sm"
+                    onClick={this.handleInfoShow}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outline-success"
+                    size="sm"
+                    onClick={this.handleConfirmShow}
+                  >
+                  Delete
+                  </Button>
+                </ButtonToolbar>
               </span>
             </div>
           </div>
@@ -76,6 +106,7 @@ class ItemDetail extends Component {
             showSuccessModal={this.handleSuccessShow}
           />
           <SuccessModal show={showSuccessModal} handleClose={this.handleSuccessClose} />
+          <ConfirmModal show={showConfirmModal} handleConfirm={this.deleteItem} handleClose={this.handleConfirmClose} />
         </div>
       );
     }

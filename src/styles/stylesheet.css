@@ -7461,3 +7461,21 @@ div .author {
 .list-header {
   margin-bottom: 1rem;
 }
+
+.modal-footer.btn-toolbar
+{
+  justify-content: right;
+}
+
+.welcome{
+  margin-top: 25%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 40px;
+  font-style: italic;
+  color: #cbcbcb;
+  text-shadow: 0px 4px 5px rgba(200, 232, 200, 0.84);
+}
+.btn:focus {
+  outline: none !important;
+}

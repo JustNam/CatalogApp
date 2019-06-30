@@ -4,10 +4,20 @@ import 'react-web-tabs/dist/react-web-tabs.css';
 import ItemList from './ItemList';
 
 class CategoryList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      categorySelected: false,
+    };
+  }
+
   state = { categoryId: 0 };
 
   getItems(e, categoryId) {
     e.preventDefault();
+    this.setState({
+      categorySelected: true,
+    });
     // eslint-disable-next-line react/destructuring-assignment
     this.props.getItemsInCategory(categoryId);
     this.setState({ categoryId });
@@ -16,7 +26,7 @@ class CategoryList extends Component {
   render() {
     // console
     const { category } = this.props;
-    const { categoryId } = this.state;
+    const { categoryId, categorySelected } = this.state;
     return (
       <div>
         <Tabs defaultTab="vertical-tab-one" vertical>
@@ -32,7 +42,14 @@ class CategoryList extends Component {
             ))}
             <br />
           </TabList>
+          {!categorySelected && (
 
+          <div className="welcome">
+              Lets's explore our catalog!
+            <br />
+              Choose a category.
+          </div>
+          )}
           {category.data.map((category, index) => (
             <TabPanel tabId={`vertical-tab-${index}`} key={category.id}>
               {category.id === categoryId && <ItemList {...this.props} />}

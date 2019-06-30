@@ -6,6 +6,7 @@ import {
   getItemsInCategory,
   getItemInCategory,
   createItemInCategory,
+  deleteItemInCategory,
 } from '../actions/item';
 
 function mapStateToProp(state) {
@@ -20,6 +21,7 @@ const mapDispatchToProp = {
   getItemsInCategory,
   getItemInCategory,
   createItemInCategory,
+  deleteItemInCategory,
 };
 
 const App = withRouter(

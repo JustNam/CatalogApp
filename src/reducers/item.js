@@ -3,6 +3,7 @@ import { GET_ITEMS_IN_CATEGORY,
   GET_ITEM_IN_CATEGORY,
   CREATE_ITEM_IN_CATEGORY,
   EDIT_ITEM_IN_CATEGORY,
+  DELETE_ITEM_IN_CATEGORY,
 } from '../constants/actionTypes';
 
 export default (state = { ...initalItemState }, action) => {
@@ -50,6 +51,18 @@ export default (state = { ...initalItemState }, action) => {
       break;
     }
     case EDIT_ITEM_IN_CATEGORY: {
+      const { data, error } = action.payload;
+      if (data) {
+        return {
+          ...state,
+        };
+      }
+      if (error) {
+        console.log(error);
+      }
+      break;
+    }
+    case DELETE_ITEM_IN_CATEGORY: {
       const { data, error } = action.payload;
       if (data) {
         return {
