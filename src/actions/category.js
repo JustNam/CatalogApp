@@ -3,5 +3,5 @@ import { callAPI } from '../utilities/request';
 
 export const getCategories = () => ({
   type: GET_CATEGORIES,
-  promise: callAPI('http://localhost:5000/categories'),
+  promise: callAPI('http://localhost:5000/categories', 'GET'),
 });

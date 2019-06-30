@@ -60,7 +60,8 @@
       }
     ],
     "react/no-did-update-set-state": 0,
-    "react/no-multi-comp": 0
+    "react/no-multi-comp": 0,
+    "react/destructuring-assignment": 0
   },
   "globals": {
     "zE": true,

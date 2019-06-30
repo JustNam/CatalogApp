@@ -17,7 +17,7 @@ class Main extends Component {
             <li className="nav-item active">
               <h1>
                 <a className="navbar-brand" href="/categories">
-                  catalog app
+                  Catalog App
                 </a>
               </h1>
             </li>
@@ -41,7 +41,11 @@ class Main extends Component {
             path="/categories/:categoryId/items/:itemId"
             render={params => <ItemDetail {...this.props} {...params} />}
           />
-          <Route exact path="/categories" render={() => <CategoryList {...this.props} />} />
+          <Route
+            exact
+            path="/categories"
+            render={() => <CategoryList {...this.props} />}
+          />
         </div>
       </div>
     );

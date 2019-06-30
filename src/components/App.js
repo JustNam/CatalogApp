@@ -2,7 +2,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Main from './Main';
 import { getCategories } from '../actions/category';
-import { getItemsInCategory, getItemInCategory } from '../actions/item';
+import {
+  getItemsInCategory,
+  getItemInCategory,
+  createItemInCategory,
+} from '../actions/item';
 
 function mapStateToProp(state) {
   return {
@@ -15,12 +19,13 @@ const mapDispatchToProp = {
   getCategories,
   getItemsInCategory,
   getItemInCategory,
+  createItemInCategory,
 };
 
 const App = withRouter(
   connect(
     mapStateToProp,
-    mapDispatchToProp,
-  )(Main),
+    mapDispatchToProp
+  )(Main)
 );
 export default App;

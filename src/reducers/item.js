@@ -1,5 +1,9 @@
 import { initalItemState } from '../utilities/state';
-import { GET_ITEMS_IN_CATEGORY, GET_ITEM_IN_CATEGORY } from '../constants/actionTypes';
+import { GET_ITEMS_IN_CATEGORY,
+  GET_ITEM_IN_CATEGORY,
+  CREATE_ITEM_IN_CATEGORY,
+  EDIT_ITEM_IN_CATEGORY,
+} from '../constants/actionTypes';
 
 export default (state = { ...initalItemState }, action) => {
   switch (action.type) {
@@ -33,7 +37,32 @@ export default (state = { ...initalItemState }, action) => {
         data: [],
       };
     }
+    case CREATE_ITEM_IN_CATEGORY: {
+      const { data, error } = action.payload;
+      if (data) {
+        return {
+          ...state,
+        };
+      }
+      if (error) {
+        console.log(error);
+      }
+      break;
+    }
+    case EDIT_ITEM_IN_CATEGORY: {
+      const { data, error } = action.payload;
+      if (data) {
+        return {
+          ...state,
+        };
+      }
+      if (error) {
+        console.log(error);
+      }
+      break;
+    }
     default:
       return state;
   }
+  return state;
 };

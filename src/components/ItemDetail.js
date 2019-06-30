@@ -1,21 +1,46 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import EditItemModal from './modals/ItemInformationModal';
+import SuccessModal from './modals/SuccessModal';
 
 class ItemDetail extends Component {
-  componentDidMount() {
-    // eslint-disable-next-line react/destructuring-assignment
+  constructor(props) {
+    super(props);
+
     const { categoryId, itemId } = this.props.match.params;
-    console.log(categoryId);
-    console.log(itemId);
-    // eslint-disable-next-line react/destructuring-assignment
+    this.state = {
+      showInfoModal: false,
+      showSuccessModal: false,
+      categoryId,
+      itemId,
+    };
+  }
+
+  componentDidMount() {
+    const { categoryId, itemId } = this.state;
     this.props.getItemInCategory(categoryId, itemId);
   }
+
+  handleInfoShow = () => {
+    this.setState({ showInfoModal: true });
+  };
+
+  handleInfoClose = () => {
+    this.setState({ showInfoModal: false });
+  };
+
+  handleSuccessShow = () => {
+    this.setState({ showSuccessModal: true });
+  };
+
+  handleSuccessClose = () => {
+    this.setState({ showSuccessModal: false });
+  };
 
   render() {
     const { item } = this.props;
     const itemDetail = item.data[0];
     if (itemDetail) {
+      const { showInfoModal, showSuccessModal, categoryId } = this.state;
       return (
         <div>
           <div className="article-preview">
@@ -31,16 +56,30 @@ class ItemDetail extends Component {
               <h1>{itemDetail.title}</h1>
               <p>{itemDetail.description}</p>
               {!itemDetail.description && <p><i>No description</i></p>}
+              <span>
+                <button
+                  className="btn btn-sm btn-outline-primary"
+                  type="button"
+                  onClick={this.handleInfoShow}
+                >
+                Edit
+                </button>
+              </span>
             </div>
           </div>
+
+          <EditItemModal
+            currentCategoryId={categoryId}
+            item={itemDetail}
+            show={showInfoModal}
+            handleClose={this.handleInfoClose}
+            showSuccessModal={this.handleSuccessShow}
+          />
+          <SuccessModal show={showSuccessModal} handleClose={this.handleSuccessClose} />
         </div>
       );
     }
     return <div />;
   }
 }
-
-const mapStateToProps = state => ({});
-const mapDispatchToProps = dispatch => ({});
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ItemDetail));
+export default ItemDetail;

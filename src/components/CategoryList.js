@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
 import ItemList from './ItemList';
-import { Route } from 'react-router-dom';
-import item from '../reducers/item';
 
 class CategoryList extends Component {
   state = { categoryId: 0 };
@@ -30,7 +27,7 @@ class CategoryList extends Component {
                 key={category.id}
                 onClick={e => this.getItems(e, category.id)}
               >
-                <h6>{category.name}</h6>
+                <h3>{category.name}</h3>
               </Tab>
             ))}
             <br />

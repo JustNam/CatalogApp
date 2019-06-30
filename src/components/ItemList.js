@@ -1,59 +1,53 @@
 /* eslint-disable arrow-parens */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Modal, Button, Form } from 'react-bootstrap';
-import CreateItemModal from '../components/Modal/CreateItemModal';
+import CreateItemModal from './modals/ItemInformationModal';
+import SuccessModal from './modals/SuccessModal';
 
 class ItemList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: true,
+      showInfoModal: false,
+      showSuccessModal: false,
     };
   }
 
-  handleClose() {
-    this.setState({ show: false });
-  }
-
-  handleShow() {
-    this.setState({ show: true });
-  }
-
-  handleTitleChange = e => {
-    this.setState({ title: e.target.value });
+  handleInfoShow = () => {
+    this.setState({ showInfoModal: true });
   };
 
-  handleDescriptionChange = e => {
-    this.setState({ description: e.target.value });
+  handleInfoClose = () => {
+    this.setState({ showInfoModal: false });
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-    // eslint-disable-next-line react/destructuring-assignment
-    console.log(this.state.title);
-    console.log(this.state.description);
+  handleSuccessShow = () => {
+    this.setState({ showSuccessModal: true });
   };
 
-  renderItems() {
+  handleSuccessClose = () => {
+    this.setState({ showSuccessModal: false });
+  };
 
+  renderItems(currentCategory, item) {
+    const { showInfoModal, showSuccessModal } = this.state;
     return (
       <div>
         <div>
-          <p>
+          <div className="list-header">
             {currentCategory[0] && `category ${currentCategory[0].name}`}
             <div className="pull-xs-right">
               <button
                 className="btn btn-sm btn-outline-primary"
                 type="button"
-                onClick={this.handleShow}
+                onClick={this.handleInfoShow}
               >
                 Create
               </button>
             </div>
-          </p>
+          </div>
         </div>
-        {item.data.map(itemDetail => (
+        {item.data.map((itemDetail) => (
           <div className="article-preview" key={itemDetail.id}>
             <Link
               className="preview-link"
@@ -65,21 +59,24 @@ class ItemList extends Component {
             </Link>
           </div>
         ))}
-
-        <CreateItemModal show={this.state.show} />
+        <CreateItemModal
+          currentCategoryId={currentCategory[0].id}
+          show={showInfoModal}
+          handleClose={this.handleInfoClose}
+          showSuccessModal={this.handleSuccessShow}
+        />
+        <SuccessModal show={showSuccessModal} handleClose={this.handleSuccessClose} />
       </div>
-      
     );
   }
 
   render() {
     const { item, category } = this.props;
-    const { show, title, description } = this.state;
     const currentCategory = category.data.filter(
-      categoryDetail => item.categoryId === categoryDetail.id,
+      (categoryDetail) => item.categoryId === categoryDetail.id
     );
     if (item.data.length !== 0) {
-      return this._renderItems();
+      return this.renderItems(currentCategory, item);
     }
     return (
       <div>
@@ -87,7 +84,9 @@ class ItemList extends Component {
         <div className="article-preview">
           <a className="preview-link" href="cafe">
             <i>
-              <span>This category is empty. Please select another category!</span>
+              <span>
+                This category is empty. Please select another category!
+              </span>
             </i>
           </a>
         </div>

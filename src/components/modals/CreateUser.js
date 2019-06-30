@@ -12,7 +12,7 @@ function UserRegister() {
           <Form.Label>Username</Form.Label>
           <Form.Control type="email" placeholder="Enter username" />
           <Form.Text className="text-muted">
-            Username only contain letters and number. Minimum length is 6 characters, maximum is 30.
+            Username only contain letters and number. Maximum length is 6 characters.
           </Form.Text>
         </Form.Group>
 
