@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import CategoryList from './CategoryList';
-import ItemDetail from './ItemDetail';
-import NavigationBar from './NavigationBar';
-import LoginPage from './LoginPage';
-import RegisterPage from './RegisterPage';
+import CategoryList from './Home/CategoryList';
+import ItemDetail from './Item/ItemDetail';
+import NavigationBar from './Home/NavigationBar';
+import LoginPage from './LandingPage/Login';
+import RegisterPage from './LandingPage/Register';
 
 
 class Main extends Component {

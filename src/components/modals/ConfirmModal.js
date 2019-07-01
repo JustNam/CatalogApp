@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import React, { Component } from './node_modules/react';
+import { Modal, Button } from './node_modules/react-bootstrap';
 
 class ConfirmModal extends Component {
   render() {

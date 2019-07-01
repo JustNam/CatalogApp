@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { ButtonToolbar, Button } from 'react-bootstrap';
-import EditItemModal from './modals/ItemInformationModal';
-import SuccessModal from './modals/SuccessModal';
-import ConfirmModal from './modals/ConfirmModal';
+import EditItemModal from '../Modals/ItemInformationModal';
+import SuccessModal from '../Modals/SuccessModal';
+import ConfirmModal from '../Modals/ConfirmModal';
 
 class ItemDetail extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import React, { Component } from './node_modules/react';
+import { Modal, Button, Form } from './node_modules/react-bootstrap';
+import { connect } from './node_modules/react-redux';
 import { createItemInCategory, editItemInCategory } from '../../actions/item';
 import { validateItemTitle } from '../../utilities/validate';
 

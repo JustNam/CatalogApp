@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
-import ItemList from './ItemList';
+import ItemList from '../ItemList';
 
 class CategoryList extends Component {
   constructor(props) {
