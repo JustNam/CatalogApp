@@ -7488,7 +7488,23 @@ div .author {
   font-size: 80%;
   color: #dc3545;
 }
+
+.success-message {
+  width: 100%;
+  margin-top: .25rem;
+  text-align: center;
+  margin-bottom: .5rem;
+  font-size: 80%;
+  color: #5cb85c;
+}
+
 .minor-title {
   margin-bottom: 15px;
   color: #5cb85c94;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
 }

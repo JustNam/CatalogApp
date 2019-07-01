@@ -8,10 +8,6 @@ import RegisterPage from './RegisterPage';
 
 
 class Main extends Component {
-  componentDidMount() {
-    this.props.getCategories();
-  }
-
   render() {
     return (
       <div>

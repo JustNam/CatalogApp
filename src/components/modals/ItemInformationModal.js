@@ -17,8 +17,8 @@ class ItemInformationModal extends Component {
       value: '',
     };
     let itemId = '';
-    // Edit the item
     if (!createItem) {
+      // Retrieve item information from another component
       const { item } = props;
       title.value = item.title;
       description.value = item.description;
@@ -29,6 +29,7 @@ class ItemInformationModal extends Component {
       isValidRequest: false,
       title,
       description,
+      // Attribute for <input/> element
       titleInputProps: {
         isValid: null,
         isInvalid: null,
@@ -44,6 +45,7 @@ class ItemInformationModal extends Component {
     }
   }
 
+  // Update UI of title input
   updateTitleInputProps = (validity) => {
     this.setState({
       titleInputProps: {
@@ -62,6 +64,7 @@ class ItemInformationModal extends Component {
     });
   };
 
+  // Validate title of item and then save it to state
   validateData = (title) => {
     const validation = validateItemTitle(title);
     this.setState({
@@ -72,12 +75,12 @@ class ItemInformationModal extends Component {
       },
     });
     this.updateTitleInputProps(validation.isValid);
-  }
+  };
 
+  // Update title from input and trigger validadtions
   handleTitleChange = (e) => {
     const { title } = this.state;
     title.value = e.target.value;
-    // Validate and process input
     if (title.value === '') {
       this.resetTitleInputProps();
     } else {
@@ -91,23 +94,37 @@ class ItemInformationModal extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { createItem, title, description, isValidRequest, itemId } = this.state;
+    const {
+      createItem,
+      title,
+      description,
+      isValidRequest,
+      itemId,
+    } = this.state;
+    // Validate by front-end
     if (isValidRequest) {
-      // Send request
       if (createItem === true) {
-        // Send POST request
+        // Submit new item information
         this.props
           .createItemInCategory(this.props.currentCategoryId, {
             title: title.value.trim(),
             description: description.value,
           })
-          .then(() => {
-            //.. Reload user history push
-            this.props.showSuccessModal();
-            this.props.handleClose();
-          })
-          .catch((error) => {
-            console.log(error);
+          .then((response) => {
+            // Validate by back-end
+            if (response.payload.error) {
+              this.setState({
+                title: {
+                  ...title,
+                  errorMessages: ['The given title already exists'],
+                },
+              });
+              this.updateTitleInputProps(false);
+            } else {
+              //.. Reload user history push
+              this.props.showSuccessModal();
+              this.props.handleClose();
+            }
           });
       } else {
         // Edit an item
@@ -117,12 +134,21 @@ class ItemInformationModal extends Component {
             title: title.value.trim(),
             description: description.value,
           })
-          .then(() => {
-            this.props.showSuccessModal();
-            this.props.handleClose();
-          })
-          .catch((error) => {
-            console.log(error);
+          .then((response) => {
+            // Validate by back-end
+            if (response.payload.error) {
+              this.setState({
+                title: {
+                  ...title,
+                  errorMessages: ['The given title already exists'],
+                },
+              });
+              this.updateTitleInputProps(false);
+            } else {
+              //.. Reload user history push
+              this.props.showSuccessModal();
+              this.props.handleClose();
+            }
           });
       }
     }
@@ -137,11 +163,11 @@ class ItemInformationModal extends Component {
         onHide={this.props.handleClose}
       >
         <Modal.Header closeButton>
-
-          {this.createItem
-            ? <Modal.Title>Create new item</Modal.Title>
-            : <Modal.Title>Edit item</Modal.Title>
-          }
+          {this.createItem ? (
+            <Modal.Title>Create new item</Modal.Title>
+          ) : (
+            <Modal.Title>Edit item</Modal.Title>
+          )}
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={this.handleSubmit}>
@@ -158,6 +184,7 @@ class ItemInformationModal extends Component {
                 Title only contain letters, numbers and spaces. Maximum length
                 is 30 characters.
               </Form.Text>
+              {/* Show error detais */}
               <Form.Control.Feedback type="invalid">
                 {title.errorMessages.map((errorMessage, index) => (
                   <div key={index}>{errorMessage}</div>
@@ -174,10 +201,11 @@ class ItemInformationModal extends Component {
                 value={description.value}
               />
             </Form.Group>
-            {this.createItem
-              ? <Button type="submit">Create</Button>
-              : <Button type="submit">Edit</Button>
-            }
+            {this.createItem ? (
+              <Button type="submit">Create</Button>
+            ) : (
+              <Button type="submit">Edit</Button>
+            )}
           </Form>
         </Modal.Body>
       </Modal>

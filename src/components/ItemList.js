@@ -65,7 +65,10 @@ class ItemList extends Component {
           handleClose={this.handleInfoClose}
           showSuccessModal={this.handleSuccessShow}
         />
-        <SuccessModal show={showSuccessModal} handleClose={this.handleSuccessClose} />
+        <SuccessModal
+          show={showSuccessModal}
+          handleClose={this.handleSuccessClose}
+        />
       </div>
     );
   }
@@ -82,7 +85,7 @@ class ItemList extends Component {
       <div>
         <p>{currentCategory[0] && `category ${currentCategory[0].name}`}</p>
         <div className="article-preview">
-          <a className="preview-link" href="cafe">
+          <a className="preview-link">
             <i>
               <span>
                 This category is empty. Please select another category!

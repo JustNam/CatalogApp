@@ -8,10 +8,13 @@ class CategoryList extends Component {
     super(props);
     this.state = {
       categorySelected: false,
+      categoryId: 0,
     };
   }
 
-  state = { categoryId: 0 };
+  componentDidMount() {
+    this.props.getCategories();
+  }
 
   getItems(e, categoryId) {
     e.preventDefault();
@@ -43,12 +46,11 @@ class CategoryList extends Component {
             <br />
           </TabList>
           {!categorySelected && (
-
-          <div className="welcome">
+            <div className="welcome">
               Lets's explore our catalog!
-            <br />
+              <br />
               Choose a category.
-          </div>
+            </div>
           )}
           {category.data.map((category, index) => (
             <TabPanel tabId={`vertical-tab-${index}`} key={category.id}>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 class LoginPage extends Component {
   constructor(props) {
@@ -23,15 +24,13 @@ class LoginPage extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { username, password } = this.state;
-    this.props
-      .login(username, password)
-      .then((response) => {
-        if (response.payload.error) {
-          this.setState({ error: true });
-        } else {
-          this.setState({ redirect: true });
-        }
-      });
+    this.props.login(username, password).then((response) => {
+      if (response.payload.error) {
+        this.setState({ error: true });
+      } else {
+        this.setState({ redirect: true });
+      }
+    });
   };
 
   render() {
@@ -47,8 +46,15 @@ class LoginPage extends Component {
               <div className="card-body">
                 <h5 className="card-title text-center">Catalog App</h5>
                 <form className="form-signin">
+                  {this.props.location.signUpSuccess && (
+                    <div className="success-message">
+                      Sign up successfully, log in with your new account!
+                    </div>
+                  )}
                   {error && (
-                    <div className="invalid-credential">Invalid username or password</div>
+                    <div className="invalid-credential">
+                      Invalid username or password
+                    </div>
                   )}
                   <div className="form-label-group">
                     <input
@@ -83,6 +89,13 @@ class LoginPage extends Component {
                   >
                     Sign in
                   </button>
+                  <Button
+                    href="/signup"
+                    className="btn btn-lg btn-outline-secondary btn-block text-uppercase"
+                    type="button"
+                  >
+                    Sign up
+                  </Button>
                 </form>
               </div>
             </div>

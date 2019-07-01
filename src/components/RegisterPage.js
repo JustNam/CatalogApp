@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { validateUsername } from '../utilities/validate';
 
@@ -25,7 +25,6 @@ class RegisterPage extends Component {
         isInvalid: null,
       },
       redirect: false,
-      error: false,
     };
   }
 
@@ -65,22 +64,21 @@ class RegisterPage extends Component {
     });
   };
 
-
   validateUsernameData = (username) => {
     const usernameValidation = validateUsername(username);
     this.setState({
-      isValidRequest: usernameValidation.isValid && this.state.passwordMatch,
       username: {
         ...usernameValidation,
       },
+      isValidRequest: usernameValidation.isValid && this.state.passwordMatch,
     });
-    this.updateusernameInputProps(usernameValidation.isValid);
-  }
+    this.updateUsernameInputProps(usernameValidation.isValid);
+  };
 
+  // Validate username and trigger update of username object
   handleUsernameChange = (e) => {
     const { username } = this.state;
     username.value = e.target.value;
-    // Validate and process input
     if (username.value === '') {
       this.resetUsernameInputProps();
     } else {
@@ -88,32 +86,60 @@ class RegisterPage extends Component {
     }
   };
 
+  // Update password value, compare with confirmPassword and update validadtions
   handlePasswordChange = (e) => {
-    const { confirmPassword } = this.state;
+    const { confirmPassword, username } = this.state;
     const password = e.target.value;
-    // Validate and process input
     if (password === '') {
       this.resetPasswordInputProps();
+      this.setState({ password: '' });
     } else {
-      this.vav(username);
+      const passwordMatch = password === confirmPassword;
+      this.setState({
+        password,
+        passwordMatch,
+        isValidRequest: username.isValid && passwordMatch,
+      });
+      if (confirmPassword) {
+        this.updatePasswordInputProps(passwordMatch);
+      }
     }
   };
 
+  // Update confirmPassword value, compare with password and update validadtions
   handleConfirmPasswordChange = (e) => {
-    this.setState({ confirmPassword: e.target.value });
+    const { password, username } = this.state;
+    const confirmPassword = e.target.value;
+    if (confirmPassword === '') {
+      this.resetPasswordInputProps();
+      this.setState({ confirmPassword: '' });
+    } else {
+      const passwordMatch = password === confirmPassword;
+      this.setState({
+        confirmPassword,
+        passwordMatch,
+        isValidRequest: username.isValid && passwordMatch,
+      });
+      if (password) {
+        this.updatePasswordInputProps(passwordMatch);
+      }
+    }
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { username, password, confirmPassword } = this.state;
-    if (password === confirmPassword) {
-      alert("Password don't match");
-    } else {
-      this.props
-        .signUp(username, password)
+    const { username, password, isValidRequest } = this.state;
+    if (isValidRequest) {
+      this.props.signUp(username.value, password)
         .then((response) => {
           if (response.payload.error) {
-            this.setState({ error: true });
+            this.setState({
+              username: {
+                ...username,
+                errorMessages: ['The username already exists'],
+              },
+            });
+            this.updateUsernameInputProps(false);
           } else {
             this.setState({ redirect: true });
           }
@@ -122,9 +148,22 @@ class RegisterPage extends Component {
   };
 
   render() {
-    const { username, password, confirmPassword, redirect, error, usernameInputProps, passwordInputProps } = this.state;
+    const {
+      username,
+      password,
+      confirmPassword,
+      redirect,
+      usernameInputProps,
+      passwordInputProps,
+    } = this.state;
     if (redirect) {
-      return <Redirect to="/login" />;
+      return (
+        <Redirect to={{
+          pathname: '/login',
+          signUpSuccess: true,
+        }}
+        />
+      );
     }
     return (
       <div className="container">
@@ -133,45 +172,50 @@ class RegisterPage extends Component {
             <div className="card card-signin my-5">
               <div className="card-body">
                 <h5 className="card-username text-center">Catalog App</h5>
-                <div className="minor-username">Register new account</div>
-                <form className="form-signin" autoComplete="off">
-                  {error && (
-                    <div className="invalid-credential">Invalid username or password</div>
-                  )}
+                <div className="minor-title">Register new account</div>
+                <form
+                  className="form-signin"
+                  autoComplete="off"
+                  onSubmit={this.handleSubmit}
+                >
                   <div className="form-label-group">
-                    <input
+                    <Form.Control
                       type="text"
                       id="inputUsername"
-                      className="form-control"
-                      placeholder="Email address"
-                      value={username}
+                      placeholder="Username"
+                      minLength="6"
+                      maxLength="30"
+                      value={username.value}
                       onChange={this.handleUsernameChange}
                       {...usernameInputProps}
                       required
                     />
                     <label htmlFor="inputUsername">Username</label>
-                  </div>
-                  <Form.Control.Feedback type="invalid">
-                    {username.errorMessages.map((errorMessage, index) => (
-                      <div key={index}>{errorMessage}</div>
-                    ))}
-                  </Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      {username.errorMessages.map((errorMessage, index) => (
+                        <div key={index}>{errorMessage}</div>
+                      ))}
+                    </Form.Control.Feedback>
 
+                  </div>
                   <div className="form-label-group">
-                    <input
+
+                    <Form.Control
                       type="password"
                       id="inputPassword"
                       className="form-control"
                       placeholder="Password"
                       value={password}
                       onChange={this.handlePasswordChange}
+                      minLength="6"
+                      {...passwordInputProps}
                       required
                     />
                     <label htmlFor="inputPassword">Password</label>
                   </div>
 
                   <div className="form-label-group">
-                    <input
+                    <Form.Control
                       type="password"
                       id="inputConfirmPassword"
                       className="form-control"
@@ -181,12 +225,17 @@ class RegisterPage extends Component {
                       required
                       {...passwordInputProps}
                     />
-                    <label htmlFor="inputConfirmPassword">Confirm Password</label>
+                    <label htmlFor="inputConfirmPassword">
+                      Confirm Password
+                    </label>
+                    <Form.Control.Feedback type="invalid">
+                    Confirm password does not match
+                    </Form.Control.Feedback>
                   </div>
 
                   <button
                     className="btn btn-lg btn-primary btn-block text-uppercase"
-                    onClick={this.handleSubmit}
+
                     type="submit"
                   >
                     Sign up

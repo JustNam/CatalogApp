@@ -8,8 +8,9 @@ export default (state = { ...initalUserState }, action) => {
       const { data } = action.payload;
       // If login successfully, save user information in localStorage
       if (data) {
-        //.. set userinfo
         localStorage.setItem('accessToken', data.access_token);
+        localStorage.setItem('username', data.username);
+        localStorage.setItem('userId', data.user_id);
         return state;
       }
       break;
