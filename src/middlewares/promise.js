@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-unused-vars
 const createPromiseMiddleware = dispatch => next => (action) => {
-  // Others middleware pass Store into function in order to use getState()
   if (!action.promise) {
     return next(action);
   }
@@ -23,8 +22,7 @@ const createPromiseMiddleware = dispatch => next => (action) => {
       payload: {
         error,
       },
-    })
-    );
+    }));
 };
 
 export default createPromiseMiddleware;

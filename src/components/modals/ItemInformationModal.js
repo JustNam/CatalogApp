@@ -102,7 +102,7 @@ class ItemInformationModal extends Component {
             description: description.value,
           })
           .then(() => {
-            //.. Reload
+            //.. Reload user history push
             this.props.showSuccessModal();
             this.props.handleClose();
           })

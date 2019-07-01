@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Main from './Main';
 import { getCategories } from '../actions/category';
+import { login } from '../actions/user';
 import {
   getItemsInCategory,
   getItemInCategory,
@@ -22,6 +23,7 @@ const mapDispatchToProp = {
   getItemInCategory,
   createItemInCategory,
   deleteItemInCategory,
+  login,
 };
 
 const App = withRouter(

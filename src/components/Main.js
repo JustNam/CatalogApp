@@ -2,39 +2,39 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import CategoryList from './CategoryList';
 import ItemDetail from './ItemDetail';
+import NavigationBar from './NavigationBar';
+import LoginPage from './LoginPage';
+import RegisterPage from './RegisterPage';
+
 
 class Main extends Component {
   componentDidMount() {
-    const { getCategories } = this.props;
-    getCategories();
+    this.props.getCategories();
   }
 
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
-          <ul className="navbar-nav">
-            <li className="nav-item active">
-              <h1>
-                <a className="navbar-brand" href="/categories">
-                  Catalog App
-                </a>
-              </h1>
-            </li>
-          </ul>
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Login
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Sign up
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <Route
+          path="/signup"
+          render={() => (
+            <RegisterPage {...this.props} />
+          )}
+        />
+        <Route
+          path="/login"
+          render={() => (
+            <LoginPage {...this.props} />
+          )}
+        />
+
+        <Route
+          path="/categories"
+          render={() => (
+            <NavigationBar />
+          )}
+        />
+
         <div className="container page">
           <Route
             exact

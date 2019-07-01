@@ -10,10 +10,12 @@ import './styles/stylesheet.css';
 import promiseMiddleware from './middlewares/promise';
 import item from './reducers/item';
 import category from './reducers/category';
+import user from './reducers/user';
 
 const reducers = {
   category,
   item,
+  user,
 };
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

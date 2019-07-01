@@ -7479,3 +7479,16 @@ div .author {
 .btn:focus {
   outline: none !important;
 }
+
+.invalid-credential {
+  width: 100%;
+  margin-top: .25rem;
+  text-align: center;
+  margin-bottom: .5rem;
+  font-size: 80%;
+  color: #dc3545;
+}
+.minor-title {
+  margin-bottom: 15px;
+  color: #5cb85c94;
+}

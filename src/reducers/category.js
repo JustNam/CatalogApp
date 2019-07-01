@@ -18,9 +18,6 @@ export default (state = { ...initalCategoryState }, action) => {
     {
       const { data } = action.payload;
       if (data) {
-        console.log({
-          ...state,
-        });
         return {
           ...state,
         };

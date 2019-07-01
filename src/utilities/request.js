@@ -10,7 +10,7 @@ export const convertToRequest = (dict) => {
   return JSON.stringify(newDict);
 };
 
-export const callAPI = async (enpoint, method, body, customizedHeaders = {}) => {
+export const callAPI = async (enpoint, method, authorization = false, body, customizedHeaders = {}) => {
   const defaultHeaders = {
     'Content-Type': 'application/json',
   };
@@ -30,6 +30,9 @@ export const callAPI = async (enpoint, method, body, customizedHeaders = {}) => 
   } else {
     delete headers['Content-Type'];
   }
+  if (authorization && localStorage.getItem('accessToken')) {
+    headers.authorization = `Bearer ${localStorage.getItem('accessToken')}`;
+  }
 
   const config = {
     method,
@@ -39,7 +42,14 @@ export const callAPI = async (enpoint, method, body, customizedHeaders = {}) => 
   if (method !== 'HEAD' && method !== 'GET') {
     config.body = tempBody;
   }
-  const response = await fetch(enpoint, config);
-  const json = await response.json();
-  return json;
+
+  function handleErrors(response) {
+    if (!response.ok) {
+      throw Error(response.statusText);
+    }
+    return response;
+  }
+  return fetch(enpoint, config)
+    .then(handleErrors)
+    .then(response => response.json());
 };
