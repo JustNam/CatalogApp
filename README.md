@@ -1,7 +1,7 @@
 #Catalog App
 
 ## Prerequisites
-- [npm@6.9.0(https://www.npmjs.com/)
+- [npm@6.9.0](https://www.npmjs.com/)
 
 ## Set up environments
 
