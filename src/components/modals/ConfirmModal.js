@@ -1,5 +1,6 @@
-import React, { Component } from './node_modules/react';
-import { Modal, Button } from './node_modules/react-bootstrap';
+import React, { Component } from 'react';
+import { Modal, Button } from 'react-bootstrap';
+
 
 class ConfirmModal extends Component {
   render() {
@@ -15,7 +16,6 @@ class ConfirmModal extends Component {
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete this item?</Modal.Body>
         <Modal.Footer>
-
           <Button variant="outline-success" size="sm" onClick={handleConfirm}>
             Yes
           </Button>

@@ -8,6 +8,7 @@ import {
   getItemInCategory,
   createItemInCategory,
   deleteItemInCategory,
+  getItemsInCategoryWithPagination,
 } from '../actions/item';
 
 function mapStateToProp(state) {
@@ -18,6 +19,7 @@ function mapStateToProp(state) {
 }
 
 const mapDispatchToProp = {
+  getItemsInCategoryWithPagination,
   getCategories,
   getItemsInCategory,
   getItemInCategory,

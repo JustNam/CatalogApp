@@ -1,4 +1,5 @@
 import { convertCamelCaseToSnakeCase } from './string';
+import envConfig from '../configurations';
 
 export const convertToRequest = (dict) => {
   const newDict = {};
@@ -49,7 +50,7 @@ export const callAPI = async (enpoint, method, authorization = false, body, cust
     }
     return response;
   }
-  return fetch(enpoint, config)
+  return fetch(envConfig.domain.concat(enpoint), config)
     .then(handleErrors)
     .then(response => response.json());
 };

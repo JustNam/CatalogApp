@@ -1,5 +1,5 @@
-import React, { Component } from './node_modules/react';
-import { Modal } from './node_modules/react-bootstrap';
+import React, { Component } from 'react';
+import { Modal } from 'react-bootstrap';
 import successImage from '../../images/checked.svg';
 
 class SuccessModal extends Component {

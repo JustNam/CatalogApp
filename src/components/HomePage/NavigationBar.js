@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import '../styles/login.css';
+import '../../styles/login.css';
 import { NavDropdown } from 'react-bootstrap';
 
 class NavigationBar extends Component {

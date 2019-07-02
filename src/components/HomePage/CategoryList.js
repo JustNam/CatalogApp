@@ -1,7 +1,8 @@
+
 import React, { Component } from 'react';
 import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
-import ItemList from '../ItemList';
+import ItemList from './ItemList';
 
 class CategoryList extends Component {
   constructor(props) {
@@ -21,8 +22,7 @@ class CategoryList extends Component {
     this.setState({
       categorySelected: true,
     });
-    // eslint-disable-next-line react/destructuring-assignment
-    this.props.getItemsInCategory(categoryId);
+    this.props.getItemsInCategoryWithPagination(categoryId, 1);
     this.setState({ categoryId });
   }
 

@@ -3,20 +3,22 @@ import { callAPI } from '../utilities/request';
 
 export const login = (username, password) => {
   const payload = {
-    username, password,
+    username,
+    password,
   };
-  return ({
+  return {
     type: LOGIN,
-    promise: callAPI('http://localhost:5000/login', 'POST', false, payload),
-  });
+    promise: callAPI('/login', 'POST', false, payload),
+  };
 };
 
 export const signUp = (username, password) => {
   const payload = {
-    username, password,
+    username,
+    password,
   };
-  return ({
+  return {
     type: SIGNUP,
-    promise: callAPI('http://localhost:5000/users', 'POST', false, payload),
-  });
+    promise: callAPI('/users', 'POST', false, payload),
+  };
 };

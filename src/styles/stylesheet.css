@@ -7502,9 +7502,3 @@ div .author {
   margin-bottom: 15px;
   color: #5cb85c94;
 }
-
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-}

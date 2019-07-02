@@ -4,6 +4,7 @@ import { GET_ITEMS_IN_CATEGORY,
   CREATE_ITEM_IN_CATEGORY,
   EDIT_ITEM_IN_CATEGORY,
   DELETE_ITEM_IN_CATEGORY,
+  GET_ITEMS_IN_CATEGORY_WITH_PAGINATION,
 } from '../constants/actionTypes';
 
 export default (state = { ...initalItemState }, action) => {
@@ -16,6 +17,25 @@ export default (state = { ...initalItemState }, action) => {
           ...state,
           data,
           categoryId,
+        };
+      }
+      // If the data is empty, it means that the category have no item, set data to null
+      return {
+        ...state,
+        data: [],
+        categoryId,
+      };
+    }
+    case GET_ITEMS_IN_CATEGORY_WITH_PAGINATION: {
+      const { data } = action.payload;
+      const { categoryId } = action;
+      if (data) {
+        return {
+          ...state,
+          data: data.items,
+          categoryId,
+          currentPage: data.current_page,
+          lastPage: data.last_page,
         };
       }
       // If the data is empty, it means that the category have no item, set data to null

@@ -59,6 +59,7 @@ class ItemDetail extends Component {
   render() {
     const { item } = this.props;
     const itemDetail = item.data[0];
+    const userId = localStorage.getItem('userId');
     if (itemDetail) {
       const { showInfoModal, showSuccessModal, showConfirmModal, categoryId } = this.state;
       return (
@@ -72,29 +73,32 @@ class ItemDetail extends Component {
                 <span className="date">{`updated ${itemDetail.created_on.replace(',', ' at')}, created ${itemDetail.updated_on.replace(',', ' at')}`}</span>
               </div>
             </div>
-            <div className="preview-link" href="#article/books-4kbydz">
+            <div className="preview-link">
               <h1>{itemDetail.title}</h1>
               <p>{itemDetail.description}</p>
               {!itemDetail.description && <p><i>No description</i></p>}
-              <span>
-                <ButtonToolbar className="modal-footer">
-
-                  <Button
-                    variant="outline-success"
-                    size="sm"
-                    onClick={this.handleInfoShow}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="outline-success"
-                    size="sm"
-                    onClick={this.handleConfirmShow}
-                  >
-                  Delete
-                  </Button>
-                </ButtonToolbar>
-              </span>
+              {(parseInt(userId) === parseInt(itemDetail.user.id))
+                && (
+                <span>
+                  <ButtonToolbar className="modal-footer">
+                    <Button
+                      variant="outline-success"
+                      size="sm"
+                      onClick={this.handleInfoShow}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outline-success"
+                      size="sm"
+                      onClick={this.handleConfirmShow}
+                    >
+                    Delete
+                    </Button>
+                  </ButtonToolbar>
+                </span>
+                )
+              }
             </div>
           </div>
 
@@ -106,7 +110,11 @@ class ItemDetail extends Component {
             showSuccessModal={this.handleSuccessShow}
           />
           <SuccessModal show={showSuccessModal} handleClose={this.handleSuccessClose} />
-          <ConfirmModal show={showConfirmModal} handleConfirm={this.deleteItem} handleClose={this.handleConfirmClose} />
+          <ConfirmModal
+            show={showConfirmModal}
+            handleConfirm={this.deleteItem}
+            handleClose={this.handleConfirmClose}
+          />
         </div>
       );
     }

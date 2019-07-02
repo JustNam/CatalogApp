@@ -1,8 +1,10 @@
 /* eslint-disable arrow-parens */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import CreateItemModal from './modals/ItemInformationModal';
-import SuccessModal from './modals/SuccessModal';
+import { Pagination } from 'react-bootstrap';
+import CreateItemModal from '../Modals/ItemInformationModal';
+import SuccessModal from '../Modals/SuccessModal';
+
 
 class ItemList extends Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class ItemList extends Component {
       showInfoModal: false,
       showSuccessModal: false,
     };
+    console.log(props);
   }
 
   handleInfoShow = () => {
@@ -28,6 +31,29 @@ class ItemList extends Component {
   handleSuccessClose = () => {
     this.setState({ showSuccessModal: false });
   };
+
+  getNewPage = (page) => {
+    const { item } = this.props;
+    console.log(item.categoryId);
+    this.props.getItemsInCategoryWithPagination(item.categoryId, page);
+  }
+
+  createPagination = () => {
+    const { item } = this.props;
+    const paginations = [];
+    if (item.data.length === 0) {
+      return [];
+    }
+    [...Array(item.lastPage).keys()].forEach((index) => {
+      const page = index + 1;
+      if (page === item.currentPage) {
+        paginations.push(<Pagination.Item key={page} active>{page}</Pagination.Item>);
+      } else {
+        paginations.push(<Pagination.Item onClick={() => this.getNewPage(page)} key={page}>{page}</Pagination.Item>);
+      }
+    });
+    return <Pagination>{paginations}</Pagination>;
+  }
 
   renderItems(currentCategory, item) {
     const { showInfoModal, showSuccessModal } = this.state;
@@ -59,6 +85,7 @@ class ItemList extends Component {
             </Link>
           </div>
         ))}
+        {this.createPagination()}
         <CreateItemModal
           currentCategoryId={currentCategory[0].id}
           show={showInfoModal}
