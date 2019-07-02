@@ -5,7 +5,7 @@
 
 ## Set up environments
 
-Clone the project
+Clone the project:
 ```sh
 git clone https://github.com/JustNam/CatalogApp
 ```
@@ -21,6 +21,13 @@ Edit configuration files for different environments:
 - Development: `src/configurations/dev.js`
 - Local: `src/configurations/local.js`
 
+Choose the environment to execute in file `.env`: 
+```
+REACT_APP_ENV='dev'
+```
+- Production: `prod`
+- Development: `dev`
+- Local: `local`
 ## Available Scripts
 
 In the project directory, you can run:
