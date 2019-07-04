@@ -1,48 +1,35 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { createItemInCategory, editItemInCategory } from '../../actions/item';
+import { editItemInCategory } from '../../actions/item';
 import { validateItemTitle } from '../../utilities/validate';
 
-class ItemInformationModal extends Component {
+class EditItemModal extends Component {
   constructor(props) {
     super(props);
-    const createItem = !props.item;
-    const title = {
-      value: '',
-      isValid: false,
-      errorMessages: [],
-    };
-    const description = {
-      value: '',
-    };
-    let itemId = '';
-    if (!createItem) {
-      // Retrieve item information from another component
-      const { item } = props;
-      title.value = item.title;
-      description.value = item.description;
-      itemId = item.id;
-    }
+    const { item } = props;
     this.state = {
-      createItem,
       isValidRequest: false,
-      title,
-      description,
+      title: {
+        value: item.title,
+        isValid: false,
+        errorMessages: [],
+      },
+      description: {
+        value: item.description,
+      },
       // Attribute for <input/> element
       titleInputProps: {
         isValid: null,
         isInvalid: null,
       },
-      itemId,
+      itemId: item.id,
     };
   }
 
   componentDidMount() {
     // Only execute when edit item
-    if (!this.state.createItem) {
-      this.validateData(this.state.title);
-    }
+    this.validateData(this.state.title);
   }
 
   // Update UI of title input
@@ -95,7 +82,6 @@ class ItemInformationModal extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const {
-      createItem,
       title,
       description,
       isValidRequest,
@@ -103,54 +89,29 @@ class ItemInformationModal extends Component {
     } = this.state;
     // Validate by front-end
     if (isValidRequest) {
-      if (createItem === true) {
-        // Submit new item information
-        this.props
-          .createItemInCategory(this.props.currentCategoryId, {
-            title: title.value.trim(),
-            description: description.value,
-          })
-          .then((response) => {
-            // Validate by back-end
-            if (response.payload.error) {
-              this.setState({
-                title: {
-                  ...title,
-                  errorMessages: ['The given title already exists'],
-                },
-              });
-              this.updateTitleInputProps(false);
-            } else {
-              //.. Reload user history push
-              this.props.showSuccessModal();
-              this.props.handleClose();
-            }
-          });
-      } else {
-        // Edit an item
-        this.props
-          .editItemInCategory(this.props.currentCategoryId, {
-            id: itemId,
-            title: title.value.trim(),
-            description: description.value,
-          })
-          .then((response) => {
-            // Validate by back-end
-            if (response.payload.error) {
-              this.setState({
-                title: {
-                  ...title,
-                  errorMessages: ['The given title already exists'],
-                },
-              });
-              this.updateTitleInputProps(false);
-            } else {
-              //.. Reload user history push
-              this.props.showSuccessModal();
-              this.props.handleClose();
-            }
-          });
-      }
+      // Edit an item
+      this.props
+        .editItemInCategory(this.props.currentCategoryId, {
+          id: itemId,
+          title: title.value.trim(),
+          description: description.value,
+        })
+        .then((response) => {
+          // Validate by back-end
+          if (response.payload.error) {
+            this.setState({
+              title: {
+                ...title,
+                errorMessages: ['The given title already exists'],
+              },
+            });
+            this.updateTitleInputProps(false);
+          } else {
+            //.. Reload user history push
+            this.props.showSuccessModal();
+            this.props.handleClose();
+          }
+        });
     }
   };
 
@@ -163,11 +124,7 @@ class ItemInformationModal extends Component {
         onHide={this.props.handleClose}
       >
         <Modal.Header closeButton>
-          {this.createItem ? (
-            <Modal.Title>Create new item</Modal.Title>
-          ) : (
-            <Modal.Title>Edit item</Modal.Title>
-          )}
+          <Modal.Title>Edit item</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={this.handleSubmit}>
@@ -201,11 +158,7 @@ class ItemInformationModal extends Component {
                 value={description.value}
               />
             </Form.Group>
-            {this.createItem ? (
-              <Button type="submit">Create</Button>
-            ) : (
-              <Button type="submit">Edit</Button>
-            )}
+            <Button type="submit">Edit</Button>
           </Form>
         </Modal.Body>
       </Modal>
@@ -215,11 +168,11 @@ class ItemInformationModal extends Component {
 
 //.. Consider again
 const mapDispatchToProp = {
-  createItemInCategory,
   editItemInCategory,
 };
+export { EditItemModal };
 
 export default connect(
   null,
   mapDispatchToProp
-)(ItemInformationModal);
+)(EditItemModal);

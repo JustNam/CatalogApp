@@ -8,7 +8,7 @@ export const login = (username, password) => {
   };
   return {
     type: LOGIN,
-    promise: callAPI('/login', 'POST', false, payload),
+    promise: callAPI('/login', 'POST', payload),
   };
 };
 
@@ -19,6 +19,6 @@ export const signUp = (username, password) => {
   };
   return {
     type: SIGNUP,
-    promise: callAPI('/users', 'POST', false, payload),
+    promise: callAPI('/users', 'POST', payload),
   };
 };

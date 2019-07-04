@@ -11,7 +11,7 @@ export const convertToRequest = (dict) => {
   return JSON.stringify(newDict);
 };
 
-export const callAPI = async (enpoint, method, authorization = false, body, customizedHeaders = {}) => {
+export const callAPI = async (enpoint, method, body, customizedHeaders = {}) => {
   const defaultHeaders = {
     'Content-Type': 'application/json',
   };
@@ -31,7 +31,7 @@ export const callAPI = async (enpoint, method, authorization = false, body, cust
   } else {
     delete headers['Content-Type'];
   }
-  if (authorization && localStorage.getItem('accessToken')) {
+  if (localStorage.getItem('accessToken')) {
     headers.authorization = `Bearer ${localStorage.getItem('accessToken')}`;
   }
 

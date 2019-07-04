@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { validateUsername } from '../../utilities/validate';
 
@@ -40,8 +40,8 @@ class RegisterPage extends Component {
   resetUsernameInputProps = () => {
     this.setState({
       usernameInputProps: {
-        isValid: '',
-        isInvalid: '',
+        isInvalid: null,
+        isValid: null,
       },
     });
   };
@@ -58,31 +58,43 @@ class RegisterPage extends Component {
   resetPasswordInputProps = () => {
     this.setState({
       passwordInputProps: {
-        isValid: '',
-        isInvalid: '',
+        isValid: null,
+        isInvalid: null,
       },
     });
   };
 
   validateUsernameData = (username) => {
     const usernameValidation = validateUsername(username);
+    const { passwordMatch } = this.state;
     this.setState({
       username: {
         ...usernameValidation,
       },
-      isValidRequest: usernameValidation.isValid && this.state.passwordMatch,
+      isValidRequest: usernameValidation.isValid && passwordMatch,
     });
     this.updateUsernameInputProps(usernameValidation.isValid);
   };
 
   // Validate username and trigger update of username object
   handleUsernameChange = (e) => {
-    const { username } = this.state;
-    username.value = e.target.value;
-    if (username.value === '') {
+    const value = e.target.value;
+    if (value === '') {
+      // Reset input props, clear state when the input is empty
+      this.setState({
+        username: {
+          value: '',
+          errorMessages: [],
+          isValid: false,
+        },
+      });
       this.resetUsernameInputProps();
     } else {
-      this.validateUsernameData(username);
+      const newUsername = {
+        ...this.state.username,
+        value,
+      };
+      this.validateUsernameData(newUsername);
     }
   };
 
@@ -114,7 +126,7 @@ class RegisterPage extends Component {
       this.resetPasswordInputProps();
       this.setState({ confirmPassword: '' });
     } else {
-      const passwordMatch = password === confirmPassword;
+      const passwordMatch = (password === confirmPassword);
       this.setState({
         confirmPassword,
         passwordMatch,
@@ -126,11 +138,12 @@ class RegisterPage extends Component {
     }
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     const { username, password, isValidRequest } = this.state;
     if (isValidRequest) {
-      this.props.signUp(username.value, password)
+      // Check if payload contains "error" key and udpate errors in state
+      await this.props.signUp(username.value, password)
         .then((response) => {
           if (response.payload.error) {
             this.setState({
@@ -140,7 +153,9 @@ class RegisterPage extends Component {
               },
             });
             this.updateUsernameInputProps(false);
+            this.setState({ test: 'true' });
           } else {
+            this.setState({ test: 'false' });
             this.setState({ redirect: true });
           }
         });
@@ -155,6 +170,7 @@ class RegisterPage extends Component {
       redirect,
       usernameInputProps,
       passwordInputProps,
+      test,
     } = this.state;
     if (redirect) {
       return (
@@ -167,6 +183,7 @@ class RegisterPage extends Component {
     }
     return (
       <div className="container">
+        <div>{test}</div>
         <div className="row">
           <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div className="card card-signin my-5">
@@ -235,11 +252,17 @@ class RegisterPage extends Component {
 
                   <button
                     className="btn btn-lg btn-primary btn-block text-uppercase"
-
                     type="submit"
                   >
-                    Sign up
+                    Submit
                   </button>
+                  <Button
+                    href="/login"
+                    className="btn btn-lg btn-outline-secondary btn-block text-uppercase"
+                    type="button"
+                  >
+                    Back to login
+                  </Button>
                 </form>
               </div>
             </div>

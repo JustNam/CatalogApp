@@ -11,6 +11,7 @@ import promiseMiddleware from './middlewares/promise';
 import item from './reducers/item';
 import category from './reducers/category';
 import user from './reducers/user';
+import history from './history';
 
 const reducers = {
   category,
@@ -27,7 +28,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter history={history}>
       <App />
     </BrowserRouter>
   </Provider>,

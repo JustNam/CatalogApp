@@ -4,11 +4,6 @@ const createPromiseMiddleware = dispatch => next => (action) => {
     return next(action);
   }
   const { promise, ...rest } = action;
-  // Action need passing through all middlewares
-  // dispatch({
-  //     type: 'WAIT'
-  // })
-
   return action.promise
     .then(data => next({
       ...rest,

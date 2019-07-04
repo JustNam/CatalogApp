@@ -11,23 +11,23 @@ import { callAPI } from '../utilities/request';
 export const getItemsInCategory = categoryId => ({
   type: GET_ITEMS_IN_CATEGORY,
   categoryId,
-  promise: callAPI(`/categories/${categoryId}/items`, 'GET', true),
+  promise: callAPI(`/categories/${categoryId}/items`, 'GET'),
 });
 
 export const getItemsInCategoryWithPagination = (categoryId, page) => ({
   type: GET_ITEMS_IN_CATEGORY_WITH_PAGINATION,
   categoryId,
-  promise: callAPI(`/categories/${categoryId}/items?page=${page}`, 'GET', true),
+  promise: callAPI(`/categories/${categoryId}/items?page=${page}`, 'GET'),
 });
 
 export const getItemInCategory = (categoryId, itemId) => ({
   type: GET_ITEM_IN_CATEGORY,
-  promise: callAPI(`/categories/${categoryId}/items/${itemId}`, 'GET', true),
+  promise: callAPI(`/categories/${categoryId}/items/${itemId}`, 'GET'),
 });
 
 export const createItemInCategory = (categoryId, payload) => ({
   type: CREATE_ITEM_IN_CATEGORY,
-  promise: callAPI(`/categories/${categoryId}/items`, 'POST', true, payload),
+  promise: callAPI(`/categories/${categoryId}/items`, 'POST', payload),
 });
 
 export const editItemInCategory = (categoryId, payload) => ({
@@ -35,12 +35,11 @@ export const editItemInCategory = (categoryId, payload) => ({
   promise: callAPI(
     `/categories/${categoryId}/items/${payload.id}`,
     'PUT',
-    true,
     payload
   ),
 });
 
 export const deleteItemInCategory = (categoryId, itemId) => ({
   type: DELETE_ITEM_IN_CATEGORY,
-  promise: callAPI(`/categories/${categoryId}/items/${itemId}`, true, 'DELETE'),
+  promise: callAPI(`/categories/${categoryId}/items/${itemId}`, 'DELETE'),
 });

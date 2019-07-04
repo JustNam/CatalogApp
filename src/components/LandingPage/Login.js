@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 class LoginPage extends Component {
@@ -44,7 +44,7 @@ class LoginPage extends Component {
           <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div className="card card-signin my-5">
               <div className="card-body">
-                <h5 className="card-title text-center">Catalog App</h5>
+                <h5 className="card-username text-center">Catalog App</h5>
                 <form className="form-signin">
                   {this.props.location.signUpSuccess && (
                     <div className="success-message">
@@ -87,7 +87,7 @@ class LoginPage extends Component {
                     onClick={this.handleSubmit}
                     type="submit"
                   >
-                    Sign in
+                    Log in
                   </button>
                   <Button
                     href="/signup"
@@ -105,5 +105,4 @@ class LoginPage extends Component {
     );
   }
 }
-
 export default LoginPage;

@@ -3,25 +3,28 @@ import React, { Component } from 'react';
 import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
 import ItemList from './ItemList';
+import NavigationBar from './NavigationBar';
+
 
 class CategoryList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categorySelected: false,
       categoryId: 0,
     };
   }
 
   componentDidMount() {
-    this.props.getCategories();
+    this.props.getCategories().then(() => {
+      const { category } = this.props;
+      const { id } = category.data[0];
+      this.props.getItemsInCategoryWithPagination(id, 1);
+      this.setState({ categoryId: id });
+    });
   }
 
   getItems(e, categoryId) {
     e.preventDefault();
-    this.setState({
-      categorySelected: true,
-    });
     this.props.getItemsInCategoryWithPagination(categoryId, 1);
     this.setState({ categoryId });
   }
@@ -29,35 +32,31 @@ class CategoryList extends Component {
   render() {
     // console
     const { category } = this.props;
-    const { categoryId, categorySelected } = this.state;
+    const { categoryId } = this.state;
     return (
       <div>
-        <Tabs defaultTab="vertical-tab-one" vertical>
-          <TabList>
-            {category.data.map((category, index) => (
-              <Tab
-                tabFor={`vertical-tab-${index}`}
-                key={category.id}
-                onClick={e => this.getItems(e, category.id)}
-              >
-                <h3>{category.name}</h3>
-              </Tab>
-            ))}
-            <br />
-          </TabList>
-          {!categorySelected && (
-            <div className="welcome">
-              Lets's explore our catalog!
+        <NavigationBar />
+        <div className="container page">
+          <Tabs defaultTab="vertical-tab-0" vertical>
+            <TabList>
+              {category.data.map((category, index) => (
+                <Tab
+                  tabFor={`vertical-tab-${index}`}
+                  key={category.id}
+                  onClick={e => this.getItems(e, category.id)}
+                >
+                  <h3>{category.name}</h3>
+                </Tab>
+              ))}
               <br />
-              Choose a category.
-            </div>
-          )}
-          {category.data.map((category, index) => (
-            <TabPanel tabId={`vertical-tab-${index}`} key={category.id}>
-              {category.id === categoryId && <ItemList {...this.props} />}
-            </TabPanel>
-          ))}
-        </Tabs>
+            </TabList>
+            {category.data.map((category, index) => (
+              <TabPanel tabId={`vertical-tab-${index}`} key={category.id}>
+                {category.id === categoryId && <ItemList {...this.props} />}
+              </TabPanel>
+            ))}
+          </Tabs>
+        </div>
       </div>
     );
   }

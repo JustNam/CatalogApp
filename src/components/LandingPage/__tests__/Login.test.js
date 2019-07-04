@@ -1,17 +1,21 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Login from '../Login';
-import { item, itemWithEmptyCategory, noDescriptionItem } from '../../../utilities/sampleData';
 
-describe('Login with input validations', () => {
+describe('Login with correct credentials', () => {
   let wrapper;
   let props;
   let instance;
-  const setup = (username, password) => {
+  const setup = () => {
     props = {
       location: {
-        signUpSuccess: '',
+        signUpSuccess: false,
       },
+      login: jest.fn(() => Promise.resolve({
+        payload: {
+          data: '',
+        },
+      })),
     };
   };
   beforeEach(() => {
@@ -34,5 +38,40 @@ describe('Login with input validations', () => {
       },
     });
     expect(wrapper.state().password).toBe('test');
+  });
+  it('It should redirect if the request is valid', async () => {
+    await instance.handleSubmit({
+      preventDefault: () => {},
+    });
+    await expect(wrapper.state().redirect).toBe(true);
+  });
+});
+
+describe('Login with input validations', () => {
+  let wrapper;
+  let props;
+  let instance;
+  const setup = () => {
+    props = {
+      location: {
+        signUpSuccess: true,
+      },
+      login: jest.fn(() => Promise.resolve({
+        payload: {
+          error: 'test',
+        },
+      })),
+    };
+  };
+  beforeEach(() => {
+    setup();
+    wrapper = shallow(<Login {...props} />);
+    instance = wrapper.instance();
+  });
+  it('It should show error when is request is invalid', async () => {
+    await instance.handleSubmit({
+      preventDefault: () => {},
+    });
+    await expect(wrapper.state().error).toBe(true);
   });
 });

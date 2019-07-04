@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Pagination } from 'react-bootstrap';
-import CreateItemModal from '../Modals/ItemInformationModal';
+import CreateItemModal from '../Modals/CreateItemModal';
 import SuccessModal from '../Modals/SuccessModal';
-
+import { historyWithRefresh } from '../../history';
 
 class ItemList extends Component {
   constructor(props) {
@@ -13,7 +13,10 @@ class ItemList extends Component {
       showInfoModal: false,
       showSuccessModal: false,
     };
-    console.log(props);
+  }
+
+  componentDidMount() {
+    this.props.getCategories();
   }
 
   handleInfoShow = () => {
@@ -30,26 +33,35 @@ class ItemList extends Component {
 
   handleSuccessClose = () => {
     this.setState({ showSuccessModal: false });
+    historyWithRefresh.push('/categories');
   };
 
   getNewPage = (page) => {
     const { item } = this.props;
-    console.log(item.categoryId);
     this.props.getItemsInCategoryWithPagination(item.categoryId, page);
   }
 
   createPagination = () => {
     const { item } = this.props;
     const paginations = [];
-    if (item.data.length === 0) {
-      return [];
-    }
     [...Array(item.lastPage).keys()].forEach((index) => {
       const page = index + 1;
       if (page === item.currentPage) {
-        paginations.push(<Pagination.Item key={page} active>{page}</Pagination.Item>);
+        paginations.push(
+          <Pagination.Item id={page} key={page} active>
+            {page}
+          </Pagination.Item>
+        );
       } else {
-        paginations.push(<Pagination.Item onClick={() => this.getNewPage(page)} key={page}>{page}</Pagination.Item>);
+        paginations.push(
+          <Pagination.Item
+            id={page}
+            onClick={() => this.getNewPage(page)}
+            key={page}
+          >
+            {page}
+          </Pagination.Item>
+        );
       }
     });
     return <Pagination>{paginations}</Pagination>;
@@ -64,6 +76,7 @@ class ItemList extends Component {
             {currentCategory[0] && `category ${currentCategory[0].name}`}
             <div className="pull-xs-right">
               <button
+                id="createButton"
                 className="btn btn-sm btn-outline-primary"
                 type="button"
                 onClick={this.handleInfoShow}
@@ -80,8 +93,10 @@ class ItemList extends Component {
               to={`/categories/${item.categoryId}/items/${itemDetail.id}`}
             >
               <h1>{itemDetail.title}</h1>
-              <p>{itemDetail.description}</p>
-              <span>Read more...</span>
+              {(itemDetail.description && (
+              <p>{(itemDetail.description.length > 100) ? `${itemDetail.description.substring(0, 100)}...` : itemDetail.description}</p>)
+              )}
+              <span>Read more</span>
             </Link>
           </div>
         ))}
@@ -103,14 +118,26 @@ class ItemList extends Component {
   render() {
     const { item, category } = this.props;
     const currentCategory = category.data.filter(
-      (categoryDetail) => item.categoryId === categoryDetail.id
+      (categoryDetail) => parseInt(item.categoryId) === parseInt(categoryDetail.id)
     );
     if (item.data.length !== 0) {
       return this.renderItems(currentCategory, item);
     }
     return (
       <div>
-        <p>{currentCategory[0] && `category ${currentCategory[0].name}`}</p>
+        <div className="list-header">
+          {currentCategory[0] && `category ${currentCategory[0].name}`}
+          <div className="pull-xs-right">
+            <button
+              id="createButton"
+              className="btn btn-sm btn-outline-primary"
+              type="button"
+              onClick={this.handleInfoShow}
+            >
+              Create
+            </button>
+          </div>
+        </div>
         <div className="article-preview">
           <a className="preview-link">
             <i>
@@ -120,6 +147,16 @@ class ItemList extends Component {
             </i>
           </a>
         </div>
+        {currentCategory[0]
+        && (
+        <CreateItemModal
+          currentCategoryId={currentCategory[0].id}
+          show={this.state.showInfoModal}
+          handleClose={this.handleInfoClose}
+          showSuccessModal={this.handleSuccessShow}
+        />
+        )
+        }
       </div>
     );
   }

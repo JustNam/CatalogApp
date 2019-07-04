@@ -7502,3 +7502,11 @@ div .author {
   margin-bottom: 15px;
   color: #5cb85c94;
 }
+
+.not-found {
+  text-align: center;
+  margin-top: 200px;
+  font-size: 120px;
+  font-family: titillium web, sans-serif;
+  text-shadow: 5px 14px 5px rgba(200, 232, 200, 0.84);
+}

@@ -4,9 +4,6 @@ export const validateItemTitle = (title) => {
   if (!value.match(/^[a-zA-Z0-9\s]+$/)) {
     errors.push('Given title contains invalid character');
   }
-  if (value.match(/\s{2}/)) {
-    errors.push('Item title must not contain 2 continuous spaces');
-  }
   return {
     value,
     isValid: (errors.length === 0),
