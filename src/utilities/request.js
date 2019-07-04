@@ -40,13 +40,13 @@ export const callAPI = async (enpoint, method, body, customizedHeaders = {}) => 
     headers,
   };
 
-  if (method !== 'HEAD' && method !== 'GET') {
+  if (method !== 'GET') {
     config.body = tempBody;
   }
 
   function handleErrors(response) {
     if (!response.ok) {
-      throw Error(response.statusText);
+      throw response;
     }
     return response;
   }

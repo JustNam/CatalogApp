@@ -7,8 +7,8 @@ const NotFound = () => (
         404: Page Not Found
       </h1>
     </div>
-
   </div>
 );
+
 
 export default NotFound;

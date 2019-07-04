@@ -109,11 +109,7 @@
       "!src/**/*.d.ts"
     ],
     "coveragePathIgnorePatterns": [
-      "src/index.js",
-      "src/components/LandingPage/NotFound.js",
-      "src/utilities/*",
-      "src/middlewares/promise.js",
-      "src/actions/*"
+      "src/index.js"
     ],
     "setupFiles": [
       "react-app-polyfill/jsdom"
