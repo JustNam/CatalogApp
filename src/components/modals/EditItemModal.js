@@ -28,7 +28,7 @@ class EditItemModal extends Component {
   }
 
   componentDidMount() {
-    // Only execute when edit item
+    // Validate of current title
     this.validateData(this.state.title);
   }
 
@@ -76,7 +76,11 @@ class EditItemModal extends Component {
   };
 
   handleDescriptionChange = (e) => {
-    this.setState({ description: { value: e.target.value } });
+    if (e.target.value) {
+      this.setState({ description: { value: e.target.value } });
+    } else {
+      this.setState({ description: { value: null } });
+    }
   };
 
   handleSubmit = (e) => {
@@ -107,7 +111,6 @@ class EditItemModal extends Component {
             });
             this.updateTitleInputProps(false);
           } else {
-            //.. Reload user history push
             this.props.showSuccessModal();
             this.props.handleClose();
           }
@@ -166,7 +169,6 @@ class EditItemModal extends Component {
   }
 }
 
-//.. Consider again
 const mapDispatchToProp = {
   editItemInCategory,
 };

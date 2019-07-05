@@ -1,9 +1,6 @@
 import { initalItemState } from '../utilities/state';
 import { GET_ITEMS_IN_CATEGORY,
   GET_ITEM_IN_CATEGORY,
-  CREATE_ITEM_IN_CATEGORY,
-  EDIT_ITEM_IN_CATEGORY,
-  DELETE_ITEM_IN_CATEGORY,
   GET_ITEMS_IN_CATEGORY_WITH_PAGINATION,
 } from '../constants/actionTypes';
 
@@ -58,44 +55,7 @@ export default (state = { ...initalItemState }, action) => {
         data: [],
       };
     }
-    case CREATE_ITEM_IN_CATEGORY: {
-      const { data, error } = action.payload;
-      if (data) {
-        return {
-          ...state,
-        };
-      }
-      if (error) {
-        console.log(error);
-      }
-      break;
-    }
-    case EDIT_ITEM_IN_CATEGORY: {
-      const { data, error } = action.payload;
-      if (data) {
-        return {
-          ...state,
-        };
-      }
-      if (error) {
-        console.log(error);
-      }
-      break;
-    }
-    case DELETE_ITEM_IN_CATEGORY: {
-      const { data, error } = action.payload;
-      if (data) {
-        return {
-          ...state,
-        };
-      }
-      if (error) {
-        console.log(error);
-      }
-      break;
-    }
     default:
       return state;
   }
-  return state;
 };

@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
@@ -14,8 +13,9 @@ class CategoryList extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props.getCategories().then(() => {
+  async componentDidMount() {
+    // Load the data of default category
+    await this.props.getCategories().then(() => {
       const { category } = this.props;
       const { id } = category.data[0];
       this.props.getItemsInCategoryWithPagination(id, 1);
@@ -24,13 +24,14 @@ class CategoryList extends Component {
   }
 
   getItems(e, categoryId) {
+    // Get items in chosen category
     e.preventDefault();
     this.props.getItemsInCategoryWithPagination(categoryId, 1);
     this.setState({ categoryId });
   }
 
   render() {
-    // console
+    // category variable contains the general information about categories
     const { category } = this.props;
     const { categoryId } = this.state;
     return (

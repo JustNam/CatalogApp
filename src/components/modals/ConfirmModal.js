@@ -11,9 +11,7 @@ class ConfirmModal extends Component {
         show={this.props.show}
         onHide={this.props.handleClose}
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm</Modal.Title>
-        </Modal.Header>
+        <Modal.Header closeButton><Modal.Title>Confirm</Modal.Title></Modal.Header>
         <Modal.Body>Are you sure you want to delete this item?</Modal.Body>
         <Modal.Footer>
           <Button variant="outline-success" size="sm" onClick={handleConfirm}>

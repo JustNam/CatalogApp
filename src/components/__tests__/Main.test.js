@@ -34,7 +34,7 @@ describe('Main for users', () => {
     const component = shallow(<Main />);
     const routes = component.find(Route);
     routes.forEach((route, index) => {
-      if (index !== routes.length - 1) {
+      if (index !== routes.length) {
         const routeProps = route.props();
         pathMap[routeProps.path] = routeProps.render().type;
       }

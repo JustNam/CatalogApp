@@ -17,7 +17,7 @@ export const validateUsername = (username) => {
   if (!value.match(/^[a-zA-Z0-9]+$/)) {
     errors.push('Given username contains invalid character');
   }
-  if (!value.length > 30) {
+  if (value.length > 30) {
     errors.push('Given username contains more than 30 characters');
   }
   return {

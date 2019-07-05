@@ -17,13 +17,17 @@ class ItemDetail extends Component {
       showConfirmModal: false,
       categoryId,
       itemId,
+      backToHome: null,
+      itemDetail: {},
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // Prevent refresh from crashing
-    const { categoryId } = this.state;
-    this.props.getItemsInCategory(categoryId);
+    const { categoryId, itemId } = this.props.match.params;
+    await this.props.getItemInCategory(categoryId, itemId);
+    const { item } = this.props;
+    this.setState({ itemDetail: item.data[0] });
   }
 
   deleteItem = (e) => {
@@ -37,6 +41,7 @@ class ItemDetail extends Component {
 
   handleInfoShow = () => {
     this.setState({ showInfoModal: true });
+    this.setState({ backToHome: false });
   };
 
   handleInfoClose = () => {
@@ -50,11 +55,16 @@ class ItemDetail extends Component {
   handleSuccessClose = () => {
     const { categoryId, itemId } = this.state;
     this.setState({ showSuccessModal: false });
-    historyWithRefresh.push(`/categories/${categoryId}/items/${itemId}/`);
+    if (this.state.backToHome) {
+      historyWithRefresh.push('/categories');
+    } else {
+      historyWithRefresh.push(`/categories/${categoryId}/items/${itemId}`);
+    }
   };
 
   handleConfirmShow = () => {
     this.setState({ showConfirmModal: true });
+    this.setState({ backToHome: true });
   };
 
   handleConfirmClose = () => {
@@ -62,10 +72,9 @@ class ItemDetail extends Component {
   };
 
   render() {
-    const { item } = this.props;
-    const itemDetail = item.data[0];
+    const { itemDetail } = this.state;
     const userId = localStorage.getItem('userId');
-    if (itemDetail) {
+    if (itemDetail.user) {
       const { showInfoModal, showSuccessModal, showConfirmModal, categoryId } = this.state;
       return (
         <div>

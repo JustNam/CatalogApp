@@ -1,15 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Main It should render correctly 1`] = `ShallowWrapper {}`;
-
 exports[`Main for guests It should render correctly 1`] = `ShallowWrapper {}`;
 
-exports[`Main for guests It should render correctly 2`] = `ShallowWrapper {}`;
-
 exports[`Main for users It should render correctly 1`] = `ShallowWrapper {}`;
-
-exports[`Main when guests It should render correctly 1`] = `ShallowWrapper {}`;
-
-exports[`Main when guests access It should render correctly 1`] = `ShallowWrapper {}`;
-
-exports[`Mainwhen guests It should render correctly 1`] = `ShallowWrapper {}`;

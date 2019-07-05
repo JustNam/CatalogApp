@@ -22,6 +22,10 @@ describe('/components/CategoryList', () => {
     setup();
     wrapper = shallow(<CategoryList {...props} />);
   });
+
+  it('It should render correctly', () => {
+    expect(wrapper).toMatchSnapshot();
+  });
   it('It should get the items in first category', () => {
     expect(props.getItemsInCategoryWithPagination).toBeCalled();
   });

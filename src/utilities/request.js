@@ -23,7 +23,14 @@ export const callAPI = async (enpoint, method, body, customizedHeaders = {}) => 
   let tempBody;
   if (body) {
     if (headers['Content-Type'] === 'application/json') {
-      tempBody = convertToRequest(body);
+      // Eliminate fields which is null
+      const processedBody = body;
+      Object.keys(processedBody).forEach((key) => {
+        if (!processedBody[key]) {
+          processedBody[key] = '';
+        }
+      });
+      tempBody = convertToRequest(processedBody);
     } else {
       delete headers['Content-Type'];
       tempBody = body;
@@ -40,6 +47,7 @@ export const callAPI = async (enpoint, method, body, customizedHeaders = {}) => 
     headers,
   };
 
+  // Only allow the other endpoints to assign body
   if (method !== 'GET') {
     config.body = tempBody;
   }
@@ -50,7 +58,8 @@ export const callAPI = async (enpoint, method, body, customizedHeaders = {}) => 
     }
     return response;
   }
-  return fetch(envConfig.domain.concat(enpoint), config)
+  const result = await fetch(envConfig.domain.concat(enpoint), config)
     .then(handleErrors)
     .then(response => response.json());
+  return result;
 };

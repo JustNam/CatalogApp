@@ -4,10 +4,10 @@ import CategoryList from './HomePage/CategoryList';
 import ItemDetail from './Item/ItemDetail';
 import LoginPage from './LandingPage/Login';
 import RegisterPage from './LandingPage/Register';
-import NotFound from './LandingPage/NotFound';
 
 class Main extends Component {
   render() {
+    // Redirect to /categories if the URL does not match any route
     const userRoutes = [
       <Route
         exact
@@ -21,8 +21,9 @@ class Main extends Component {
         path="/categories"
         render={() => <CategoryList {...this.props} />}
       />,
-      <Route key="not-found" component={NotFound} />,
+      <Redirect key="redirect-category" to="/categories" />,
     ];
+    // Redirect to /login if the URL does not match with any route and current actor is guest
     const guestRoutes = [
       <Route
         path="/signup"

@@ -23,6 +23,9 @@ describe('Login with correct credentials', () => {
     wrapper = shallow(<Login {...props} />);
     instance = wrapper.instance();
   });
+  it('It should render correctly', () => {
+    expect(wrapper).toMatchSnapshot();
+  });
   it('It should change username in state when username input is changed', () => {
     instance.handleUsernameChange({
       target: {

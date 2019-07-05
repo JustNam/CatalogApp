@@ -208,6 +208,7 @@ class RegisterPage extends Component {
                       required
                     />
                     <label htmlFor="inputUsername">Username</label>
+                    {/* Error notifications for username */}
                     <Form.Control.Feedback type="invalid">
                       {username.errorMessages.map((errorMessage, index) => (
                         <div key={index}>{errorMessage}</div>

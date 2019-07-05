@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 class LoginPage extends Component {
@@ -46,6 +46,7 @@ class LoginPage extends Component {
               <div className="card-body">
                 <h5 className="card-username text-center">Catalog App</h5>
                 <form className="form-signin">
+                  {/* Display notification if user has just finished signing up */}
                   {this.props.location.signUpSuccess && (
                     <div className="success-message">
                       Sign up successfully, log in with your new account!

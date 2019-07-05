@@ -6,6 +6,7 @@ import CreateItemModal from '../Modals/CreateItemModal';
 import SuccessModal from '../Modals/SuccessModal';
 import { historyWithRefresh } from '../../history';
 
+
 class ItemList extends Component {
   constructor(props) {
     super(props);
@@ -42,10 +43,12 @@ class ItemList extends Component {
   }
 
   createPagination = () => {
+    // Create Pagination component
     const { item } = this.props;
     const paginations = [];
     [...Array(item.lastPage).keys()].forEach((index) => {
       const page = index + 1;
+      // Set active item for current category
       if (page === item.currentPage) {
         paginations.push(
           <Pagination.Item id={page} key={page} active>
@@ -86,6 +89,7 @@ class ItemList extends Component {
             </div>
           </div>
         </div>
+        {/* Generate list of component */}
         {item.data.map((itemDetail) => (
           <div className="article-preview" key={itemDetail.id}>
             <Link
@@ -101,6 +105,7 @@ class ItemList extends Component {
           </div>
         ))}
         {this.createPagination()}
+        {/* Create Success and Confirm popup */}
         <CreateItemModal
           currentCategoryId={currentCategory[0].id}
           show={showInfoModal}
@@ -117,12 +122,19 @@ class ItemList extends Component {
 
   render() {
     const { item, category } = this.props;
+    // Prevent error when the state of CategoryList is lost, do not have categoryId
+    if (item.categoryId === 0) {
+      item.categoryId = 1;
+    }
     const currentCategory = category.data.filter(
       (categoryDetail) => parseInt(item.categoryId) === parseInt(categoryDetail.id)
     );
-    if (item.data.length !== 0) {
-      return this.renderItems(currentCategory, item);
+    if (currentCategory) {
+      if (item.data.length !== 0) {
+        return this.renderItems(currentCategory, item);
+      }
     }
+    // Render component for empty category
     return (
       <div>
         <div className="list-header">

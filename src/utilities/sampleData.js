@@ -1,20 +1,22 @@
 export const errorItem = {
-  data: [{
-    category: {
-      created_on: '06/04/2019, 16:16:33',
-      id: 1,
-      name: 'Running',
-      updated_on: '06/04/2019, 16:29:01',
+  data: [
+    {
+      category: {
+        created_on: '06/04/2019, 16:16:33',
+        id: 1,
+        name: 'Running',
+        updated_on: '06/04/2019, 16:29:01',
+      },
+      created_on: '06/04/2019, 16:29:43',
+      id: 7,
+      title: 'Ru4)',
+      updated_on: '07/02/2019, 22:08:02',
+      user: {
+        id: 1,
+        username: 'nam123',
+      },
     },
-    created_on: '06/04/2019, 16:29:43',
-    id: 7,
-    title: 'Ru4)',
-    updated_on: '07/02/2019, 22:08:02',
-    user: {
-      id: 1,
-      username: 'nam123',
-    },
-  }],
+  ],
 };
 
 export const itemWithEmptyCategory = {

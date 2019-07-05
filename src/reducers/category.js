@@ -1,31 +1,20 @@
 import { initalCategoryState } from '../utilities/state';
-import { GET_CATEGORIES, CREATE_ITEM_IN_CATEGORY } from '../constants/actionTypes';
+import { GET_CATEGORIES } from '../constants/actionTypes';
 
 export default (state = { ...initalCategoryState }, action) => {
   switch (action.type) {
     case GET_CATEGORIES:
-      {
-        const { data } = action.payload;
-        if (data) {
-          return {
-            ...state,
-            data,
-          };
-        }
-      }
-      break;
-    case CREATE_ITEM_IN_CATEGORY:
     {
       const { data } = action.payload;
       if (data) {
         return {
           ...state,
+          data,
         };
       }
-      break;
+      return state;
     }
     default:
       return state;
   }
-  return state;
 };

@@ -20,6 +20,10 @@ describe('Register with input validations', () => {
     wrapper = shallow(<Register {...props} />);
     instance = wrapper.instance();
   });
+
+  it('It should render correctly', () => {
+    expect(wrapper).toMatchSnapshot();
+  });
   it('It should change username in state when username input is changed', () => {
     instance.handleUsernameChange({
       target: {

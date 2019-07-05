@@ -1,5 +1,5 @@
 
-import { LOGIN, SIGNUP } from '../constants/actionTypes';
+import { LOGIN } from '../constants/actionTypes';
 import { initalUserState } from '../utilities/state';
 
 export default (state = { ...initalUserState }, action) => {
@@ -13,13 +13,9 @@ export default (state = { ...initalUserState }, action) => {
         localStorage.setItem('userId', data.user_id);
         return state;
       }
-      break;
-    }
-    case SIGNUP: {
-      break;
+      return state;
     }
     default:
       return state;
   }
-  return state;
 };

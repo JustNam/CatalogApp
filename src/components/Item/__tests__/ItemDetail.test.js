@@ -30,6 +30,9 @@ describe('ItemDetail with available item', () => {
     wrapper = shallow(<ItemDetail {...props} />);
     instance = wrapper.instance();
   });
+  it('It should render correctly', () => {
+    expect(wrapper).toMatchSnapshot();
+  });
   it('It should show a CreateItemModal', () => {
     wrapper.find('Button[id="editButton"]').simulate('click');
     expect(wrapper.state().showInfoModal).toEqual(true);
