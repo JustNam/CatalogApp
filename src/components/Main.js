@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import CategoryList from './HomePage/CategoryList';
-import ItemDetail from './Item/ItemDetail';
-import LoginPage from './LandingPage/Login';
-import RegisterPage from './LandingPage/Register';
+import CategoryList from 'components/HomePage/CategoryList';
+import ItemDetail from 'components/Item/ItemDetail';
+import LoginPage from 'components/LandingPage/Login';
+import RegisterPage from 'components/LandingPage/Register';
 
 class Main extends Component {
   render() {
