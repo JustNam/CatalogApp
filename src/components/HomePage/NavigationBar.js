@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import '../../styles/login.css';
 import { NavDropdown } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 
-class NavigationBar extends Component {
+export class NavigationBar extends Component {
    logOut = () => {
      const { history } = this.props;
      localStorage.removeItem('accessToken');
@@ -35,5 +35,5 @@ class NavigationBar extends Component {
      );
    }
 }
-export { NavigationBar };
+
 export default withRouter(NavigationBar);

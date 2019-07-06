@@ -22,6 +22,9 @@ describe('ItemDetail with available item', () => {
       showConfirmModal: false,
       deleteItemInCategory: jest.fn(() => Promise.resolve()),
       getItemsInCategory: jest.fn(() => Promise.resolve()),
+      itemDetail: {
+        user: '',
+      },
     };
   };
   beforeEach(() => {
@@ -34,6 +37,12 @@ describe('ItemDetail with available item', () => {
     expect(wrapper).toMatchSnapshot();
   });
   it('It should show a CreateItemModal', () => {
+    // console.log(wrapper.debug());
+    // wrapper.setState({
+    //   itemDetail: {
+
+    //   }
+    // });
     wrapper.find('Button[id="editButton"]').simulate('click');
     expect(wrapper.state().showInfoModal).toEqual(true);
   });
