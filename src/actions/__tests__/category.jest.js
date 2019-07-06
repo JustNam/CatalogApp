@@ -1,7 +1,7 @@
 import configureStore from 'redux-mock-store';
-import { getCategories } from '../category';
-import { GET_CATEGORIES } from '../../constants/actionTypes';
-import { callAPI } from '../../utilities/request';
+import { getCategories } from 'actions/category';
+import { GET_CATEGORIES } from 'constants/actionTypes';
+import { callAPI } from 'utilities/request';
 
 const mockStore = configureStore();
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import CategoryList from '../CategoryList';
-import { category } from '../../../utilities/sampleData';
+import CategoryList from 'components/HomePage/CategoryList';
+import { category } from 'utilities/sampleData';
 
 // import { configure } from 'enzyme';
 // import Adapter from 'enzyme-adapter-react-16';

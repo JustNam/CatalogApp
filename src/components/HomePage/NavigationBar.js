@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../styles/login.css';
+import 'styles/login.css';
 import { NavDropdown } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 

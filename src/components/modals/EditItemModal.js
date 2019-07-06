@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { editItemInCategory } from '../../actions/item';
-import { validateItemTitle } from '../../utilities/validate';
+import { editItemInCategory } from 'actions/item';
+import { validateItemTitle } from 'utilities/validate';
 
 class EditItemModal extends Component {
   constructor(props) {

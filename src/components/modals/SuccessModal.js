@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
-import successImage from '../../images/checked.svg';
+import successImage from 'images/checked.svg';
 
 class SuccessModal extends Component {
   render() {

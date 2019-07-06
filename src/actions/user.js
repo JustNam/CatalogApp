@@ -1,5 +1,5 @@
-import { LOGIN, SIGNUP } from '../constants/actionTypes';
-import { callAPI } from '../utilities/request';
+import { LOGIN, SIGNUP } from 'constants/actionTypes';
+import { callAPI } from 'utilities/request';
 
 export const login = (username, password) => {
   const payload = {

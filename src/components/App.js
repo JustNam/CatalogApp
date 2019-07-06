@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { getCategories } from 'actions/category';
+import { login, signUp } from 'actions/user';
 import Main from './Main';
-import { getCategories } from '../actions/category';
-import { login, signUp } from '../actions/user';
 import {
   getItemsInCategory,
   getItemInCategory,

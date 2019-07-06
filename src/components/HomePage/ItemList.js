@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Pagination } from 'react-bootstrap';
-import CreateItemModal from '../Modals/CreateItemModal';
-import SuccessModal from '../Modals/SuccessModal';
+import CreateItemModal from 'components/Modals/CreateItemModal';
+import SuccessModal from 'components/Modals/SuccessModal';
 import { historyWithRefresh } from '../../history';
 
 

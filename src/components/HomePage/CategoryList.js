@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
-import ItemList from './ItemList';
-import NavigationBar from './NavigationBar';
+import ItemList from 'components/HomePage/ItemList';
+import NavigationBar from 'components/HomePage/NavigationBar';
 
 
 class CategoryList extends Component {

@@ -5,7 +5,7 @@ import {
   EDIT_ITEM_IN_CATEGORY,
   DELETE_ITEM_IN_CATEGORY,
   GET_ITEMS_IN_CATEGORY_WITH_PAGINATION,
-} from '../constants/actionTypes';
+} from 'constants/actionTypes';
 import { callAPI } from '../utilities/request';
 
 export const getItemsInCategory = categoryId => ({
