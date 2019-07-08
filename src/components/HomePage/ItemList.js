@@ -129,10 +129,6 @@ export class ItemList extends Component {
 
   render() {
     const { item, category } = this.props;
-    // Prevent error when the state of HomePage is lost, do not have categoryId
-    // if (item.categoryId === 0) {
-    //   item.categoryId = 1;
-    // }
     const currentCategory = category.data.filter(
       (categoryDetail) => parseInt(item.categoryId) === parseInt(categoryDetail.id)
     );

@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import { HomePage } from 'components/HomePage/HomePage';
 import { category } from 'utilities/sampleData';
 
-// configure({ adapter: new Adapter() });
 describe('/components/HomePage', () => {
   let wrapper;
   let props;
