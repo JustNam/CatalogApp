@@ -1,3 +1,3 @@
-import Login from 'components/LandingPage/Login';
+import LandingPage from 'components/LandingPage/LandingPage';
 
-export default Login;
+export default LandingPage;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { CategoryList } from 'components/HomePage/CategoryList';
+import { HomePage } from 'components/HomePage/HomePage';
 import { category } from 'utilities/sampleData';
 
 // configure({ adapter: new Adapter() });
-describe('/components/CategoryList', () => {
+describe('/components/HomePage', () => {
   let wrapper;
   let props;
   const setup = () => {
@@ -17,7 +17,7 @@ describe('/components/CategoryList', () => {
   };
   beforeEach(() => {
     setup();
-    wrapper = shallow(<CategoryList {...props} />);
+    wrapper = shallow(<HomePage {...props} />);
   });
 
   it('It should render correctly', () => {

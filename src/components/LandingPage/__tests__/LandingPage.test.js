@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { LoginPage } from 'components/LandingPage/Login';
+import { LandingPage } from 'components/LandingPage/LandingPage';
 
 describe('Login with correct credentials', () => {
   let wrapper;
@@ -23,7 +23,7 @@ describe('Login with correct credentials', () => {
   };
   beforeEach(() => {
     setup();
-    wrapper = shallow(<LoginPage {...props} />);
+    wrapper = shallow(<LandingPage {...props} />);
     instance = wrapper.instance();
   });
   it('It should render correctly', () => {
@@ -71,7 +71,7 @@ describe('Login with input validations', () => {
   };
   beforeEach(() => {
     setup();
-    wrapper = shallow(<LoginPage {...props} />);
+    wrapper = shallow(<LandingPage {...props} />);
     instance = wrapper.instance();
   });
   it('It should show error when is request is invalid', async () => {

@@ -10,5 +10,5 @@ export const initalItemState = {
 };
 
 export const initalUserState = {
-  loggedIn: false,
+  loggedIn: localStorage.getItem('accessToken') || false,
 };

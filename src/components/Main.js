@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import LoginPage from 'components/LandingPage';
-import CategoryList from 'components/HomePage';
+import LandingPage from 'components/LandingPage';
+import HomePage from 'components/HomePage';
 import ItemDetail from 'components/Item';
 import RegisterPage from 'components/LandingPage/Register';
 import { connect } from 'react-redux';
@@ -17,10 +17,14 @@ export class Main extends Component {
         render={params => <ItemDetail {...this.props} {...params} />}
       />,
       <Route
-        exact
+        key="category-list"
+        path="/categories/:categoryId"
+        render={params => <HomePage {...this.props} {...params} />}
+      />,
+      <Route
         key="category-list"
         path="/categories"
-        render={() => <CategoryList {...this.props} />}
+        render={() => <HomePage {...this.props} />}
       />,
       <Redirect key="redirect-category" to="/categories" />,
     ];
@@ -37,7 +41,7 @@ export class Main extends Component {
         path="/login"
         key="login"
         render={() => (
-          <LoginPage />
+          <LandingPage />
         )}
       />,
       <Redirect key="redirect-login" to="/login" />,

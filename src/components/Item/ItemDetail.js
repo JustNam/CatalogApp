@@ -28,6 +28,8 @@ export class ItemDetail extends Component {
     // Prevent refresh from crashing
     const { categoryId, itemId } = this.props.match.params;
     await this.props.getItemInCategory(categoryId, itemId);
+    const { item } = this.props;
+    this.setState({ itemDetail: item.data[0] });
   }
 
   deleteItem = (e) => {
@@ -56,7 +58,7 @@ export class ItemDetail extends Component {
     const { categoryId, itemId } = this.state;
     this.setState({ showSuccessModal: false });
     if (this.state.backToHome) {
-      history.push('/categories');
+      history.push(`/categories/${categoryId}`);
     } else {
       history.push(`/categories/${categoryId}/items/${itemId}`);
       this.componentDidMount();

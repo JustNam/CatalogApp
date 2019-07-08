@@ -37,13 +37,13 @@ export class ItemList extends Component {
   handleSuccessClose = () => {
     this.setState({ showSuccessModal: false });
     this.handleInfoClose();
-    history.push('/categories');
+    history.push(`/categories/${this.props.item.categoryId}`);
   };
 
   getNewPage = (page) => {
     const { item } = this.props;
     this.props.getItemsInCategoryWithPagination(item.categoryId, page);
-  }
+  };
 
   createPagination = () => {
     // Create Pagination component
@@ -71,7 +71,7 @@ export class ItemList extends Component {
       }
     });
     return <Pagination>{paginations}</Pagination>;
-  }
+  };
 
   renderItems(currentCategory, item) {
     const { showInfoModal, showSuccessModal } = this.state;
@@ -100,8 +100,12 @@ export class ItemList extends Component {
               to={`/categories/${item.categoryId}/items/${itemDetail.id}`}
             >
               <h1>{itemDetail.title}</h1>
-              {(itemDetail.description && (
-              <p>{(itemDetail.description.length > 100) ? `${itemDetail.description.substring(0, 100)}...` : itemDetail.description}</p>)
+              {itemDetail.description && (
+                <p>
+                  {itemDetail.description.length > 100
+                    ? `${itemDetail.description.substring(0, 100)}...`
+                    : itemDetail.description}
+                </p>
               )}
               <span>Read more</span>
             </Link>
@@ -125,7 +129,7 @@ export class ItemList extends Component {
 
   render() {
     const { item, category } = this.props;
-    // Prevent error when the state of CategoryList is lost, do not have categoryId
+    // Prevent error when the state of HomePage is lost, do not have categoryId
     // if (item.categoryId === 0) {
     //   item.categoryId = 1;
     // }
@@ -162,16 +166,14 @@ export class ItemList extends Component {
             </i>
           </a>
         </div>
-        {currentCategory[0]
-        && (
-        <CreateItemModal
-          currentCategoryId={currentCategory[0].id}
-          show={this.state.showInfoModal}
-          handleClose={this.handleInfoClose}
-          showSuccessModal={this.handleSuccessShow}
-        />
-        )
-        }
+        {currentCategory[0] && (
+          <CreateItemModal
+            currentCategoryId={currentCategory[0].id}
+            show={this.state.showInfoModal}
+            handleClose={this.handleInfoClose}
+            showSuccessModal={this.handleSuccessShow}
+          />
+        )}
       </div>
     );
   }
@@ -186,4 +188,7 @@ const mapDispatchToProps = {
   getCategories,
   getItemsInCategoryWithPagination,
 };
-export default connect(mapStateToProps, mapDispatchToProps)(ItemList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ItemList);

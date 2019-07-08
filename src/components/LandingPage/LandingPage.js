@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { login } from 'actions/user';
 import { withRouter } from 'react-router';
 
-export class LoginPage extends Component {
+export class LandingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -119,5 +119,5 @@ export default withRouter(
   connect(
     null,
     mapDispatchToProp
-  )(LoginPage)
+  )(LandingPage)
 );

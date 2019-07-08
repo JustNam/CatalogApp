@@ -6,8 +6,10 @@ import ItemList from 'components/HomePage/ItemList';
 import NavigationBar from 'components/HomePage/NavigationBar';
 import { getItemsInCategoryWithPagination } from 'actions/item';
 import { getCategories } from 'actions/category';
+import { withRouter } from 'react-router-dom';
+import history from '../../history';
 
-export class CategoryList extends Component {
+export class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +21,7 @@ export class CategoryList extends Component {
     // Load the data of default category
     await this.props.getCategories().then(() => {
       const { category } = this.props;
-      let id = parseInt(localStorage.getItem('categoryId'));
+      let id = parseInt(this.props.match.params.categoryId);
       if (!id) {
         id = category.data[0].id;
       }
@@ -28,13 +30,13 @@ export class CategoryList extends Component {
     });
   }
 
-  getItems(e, categoryId) {
+  getItems = (e, categoryId) => {
     // Get items in chosen category
     e.preventDefault();
-    localStorage.setItem('categoryId', categoryId);
     this.props.getItemsInCategoryWithPagination(categoryId, 1);
     this.setState({ categoryId });
-  }
+    history.push(`/categories/${categoryId}`);
+  };
 
   render() {
     // category variable contains the general information about categories
@@ -69,7 +71,9 @@ export class CategoryList extends Component {
             </TabList>
             {category.data.map(category => (
               <TabPanel tabId={`vertical-tab-${category.id}`} key={category.id}>
-                {category.id === categoryId && <ItemList getItems={this.getItems} />}
+                {category.id === categoryId && (
+                  <ItemList getItems={this.getItems} />
+                )}
               </TabPanel>
             ))}
           </Tabs>
@@ -91,5 +95,9 @@ const mapDispatchToProp = {
   getCategories,
 };
 
-
-export default connect(mapStateToProp, mapDispatchToProp)(CategoryList);
+export default withRouter(
+  connect(
+    mapStateToProp,
+    mapDispatchToProp
+  )(HomePage)
+);

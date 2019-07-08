@@ -1,3 +1,3 @@
-import CategoryList from 'components/HomePage/CategoryList';
+import HomePage from 'components/HomePage/HomePage';
 
-export default CategoryList;
+export default HomePage;

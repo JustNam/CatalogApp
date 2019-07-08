@@ -2,10 +2,10 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { shallow } from 'enzyme';
 import { ItemDetail } from 'components/Item/ItemDetail';
-import { LoginPage } from 'components/LandingPage/Login';
+import { LandingPage } from 'components/LandingPage/LandingPage';
 import { RegisterPage } from 'components/LandingPage/Register';
 import { Main } from 'components/Main';
-import { CategoryList } from '../HomePage/CategoryList';
+import { HomePage } from '../HomePage/HomePage';
 
 let pathMap = {};
 describe('Main for guests', () => {
@@ -29,7 +29,7 @@ describe('Main for guests', () => {
   });
   it('It should show components for guests', () => {
     expect(pathMap['/signup'].WrappedComponent).toBe(RegisterPage);
-    expect(pathMap['/login'].WrappedComponent).toBe(LoginPage);
+    expect(pathMap['/login'].WrappedComponent).toBe(LandingPage);
   });
 });
 describe('Main for users', () => {
@@ -57,6 +57,6 @@ describe('Main for users', () => {
   });
   it('It should show components for guests', () => {
     expect(pathMap['/categories/:categoryId/items/:itemId'].WrappedComponent).toBe(ItemDetail);
-    expect(pathMap['/categories'].WrappedComponent).toBe(CategoryList);
+    expect(pathMap['/categories'].WrappedComponent).toBe(HomePage);
   });
 });
