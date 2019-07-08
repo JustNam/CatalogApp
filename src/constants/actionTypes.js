@@ -8,3 +8,4 @@ export const EDIT_ITEM_IN_CATEGORY = 'EDIT_ITEM_IN_CATEGORY';
 export const DELETE_ITEM_IN_CATEGORY = 'DELETE_ITEM_IN_CATEGORY';
 export const LOGIN = 'LOGIN';
 export const SIGNUP = 'SIGNUP';
+export const LOGOUT = 'LOGOUT';

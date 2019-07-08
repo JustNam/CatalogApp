@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { login } from 'actions/user';
 import { withRouter } from 'react-router';
 
-class LoginPage extends Component {
+export class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {

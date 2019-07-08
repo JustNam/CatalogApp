@@ -9,7 +9,7 @@ import { getItemsInCategoryWithPagination } from 'actions/item';
 import { connect } from 'react-redux';
 import history from '../../history';
 
-class ItemList extends Component {
+export class ItemList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -126,9 +126,9 @@ class ItemList extends Component {
   render() {
     const { item, category } = this.props;
     // Prevent error when the state of CategoryList is lost, do not have categoryId
-    if (item.categoryId === 0) {
-      item.categoryId = 1;
-    }
+    // if (item.categoryId === 0) {
+    //   item.categoryId = 1;
+    // }
     const currentCategory = category.data.filter(
       (categoryDetail) => parseInt(item.categoryId) === parseInt(categoryDetail.id)
     );

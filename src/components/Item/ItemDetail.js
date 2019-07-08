@@ -8,7 +8,7 @@ import NavigationBar from 'components/HomePage/NavigationBar';
 import { getItemInCategory, deleteItemInCategory } from 'actions/item';
 import history from '../../history';
 
-class ItemDetail extends Component {
+export class ItemDetail extends Component {
   constructor(props) {
     super(props);
 
@@ -28,8 +28,6 @@ class ItemDetail extends Component {
     // Prevent refresh from crashing
     const { categoryId, itemId } = this.props.match.params;
     await this.props.getItemInCategory(categoryId, itemId);
-    const { item } = this.props;
-    this.setState({ itemDetail: item.data[0] });
   }
 
   deleteItem = (e) => {

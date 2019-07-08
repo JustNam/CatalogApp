@@ -13,14 +13,17 @@ it('It should render with correct content', () => {
 });
 
 it('It should delete all data saved in localStorage', () => {
-  localStorage.setItem('accessToken', 'test');
-  localStorage.setItem('username', 'test');
-  localStorage.setItem('userId', 1);
-
-  const historyMock = { push: jest.fn() };
-  const wrapper = shallow(<NavigationBar history={historyMock} />);
-  wrapper.find('DropdownItem').simulate('click');
-  expect(localStorage.getItem('accessToken')).toBe(null);
-  expect(localStorage.getItem('username')).toBe(null);
-  expect(localStorage.getItem('userId')).toBe(null);
+  const props = {
+    category: {
+      data: [
+        {
+          id: 0,
+        },
+      ],
+    },
+    getItemsInCategoryWithPagination: jest.fn(() => {}),
+  };
+  const wrapper = shallow(<NavigationBar {...props} />);
+  wrapper.find('Link').simulate('click');
+  expect(props.getItemsInCategoryWithPagination).toBeCalled();
 });

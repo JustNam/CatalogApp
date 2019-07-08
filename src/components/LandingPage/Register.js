@@ -6,7 +6,7 @@ import { validateUsername } from 'utilities/validate';
 import { signUp } from 'actions/user';
 import { withRouter } from 'react-router';
 
-class RegisterPage extends Component {
+export class RegisterPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -157,6 +157,7 @@ class RegisterPage extends Component {
                 },
               });
             } else {
+              
               this.setState({
                 username: {
                   ...username,

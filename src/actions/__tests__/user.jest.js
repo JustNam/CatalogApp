@@ -1,7 +1,7 @@
 import configureStore from 'redux-mock-store';
-import { login, signUp } from '../user';
-import { LOGIN, SIGNUP } from '../../constants/actionTypes';
-import { callAPI } from '../../utilities/request';
+import { login, signUp, logOut } from 'actions/user';
+import { LOGIN, SIGNUP, LOGOUT } from 'constants/actionTypes';
+import { post } from 'utilities/request';
 
 const mockStore = configureStore();
 
@@ -22,7 +22,7 @@ describe('User actions', () => {
     const actions = store.getActions();
     expect(actions[0]).toMatchObject({
       type: LOGIN,
-      promise: callAPI('/login', 'POST', payload),
+      promise: post('/login', payload),
     });
   });
   it('should dispatch new SIGNUP action', async () => {
@@ -36,7 +36,16 @@ describe('User actions', () => {
     const actions = store.getActions();
     expect(actions[0]).toMatchObject({
       type: SIGNUP,
-      promise: callAPI('/users', 'POST', payload),
+      promise: post('/users', payload),
+    });
+  });
+  it('should dispatch new LOGOUT action', async () => {
+    store.dispatch(
+      logOut()
+    );
+    const actions = store.getActions();
+    expect(actions[0]).toMatchObject({
+      type: LOGOUT,
     });
   });
 });

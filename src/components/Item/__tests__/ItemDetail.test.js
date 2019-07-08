@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ItemDetail from '..';
-import { item, itemWithEmptyCategory, noDescriptionItem } from '../../../utilities/sampleData';
+import { ItemDetail } from 'components/Item/ItemDetail';
+import { item, itemWithEmptyCategory, noDescriptionItem } from 'utilities/sampleData';
 
 
 describe('ItemDetail with available item', () => {
@@ -16,15 +16,21 @@ describe('ItemDetail with available item', () => {
           itemId: 7,
         },
       },
-      item,
+      item: {
+        data: [
+          {
+            id: 1,
+          },
+        ],
+      },
+      itemDetail: {
+        created_on: 1,
+      },
       showInfoModal: false,
       showSuccessModal: false,
       showConfirmModal: false,
       deleteItemInCategory: jest.fn(() => Promise.resolve()),
       getItemsInCategory: jest.fn(() => Promise.resolve()),
-      itemDetail: {
-        user: '',
-      },
     };
   };
   beforeEach(() => {
@@ -37,14 +43,20 @@ describe('ItemDetail with available item', () => {
     expect(wrapper).toMatchSnapshot();
   });
   it('It should show a CreateItemModal', () => {
-    // console.log(wrapper.debug());
-    // wrapper.setState({
-    //   itemDetail: {
-
-    //   }
-    // });
+    wrapper.setState({
+      ...wrapper.state(),
+      itemDetail: {
+        user: {
+          id: 1,
+        },
+        created_on: 'test',
+        updated_on: 'test',
+      },
+    });
+    localStorage.setItem('userId', 1);
     wrapper.find('Button[id="editButton"]').simulate('click');
     expect(wrapper.state().showInfoModal).toEqual(true);
+    localStorage.clear();
   });
   it('It should close CreateItemModal when handleInfoClose is called', () => {
     instance.handleInfoClose();
@@ -55,6 +67,13 @@ describe('ItemDetail with available item', () => {
     expect(wrapper.state().showSuccessModal).toEqual(true);
   });
   it('It should close SuccessModal when handleSuccessClose is called', () => {
+    instance.handleSuccessClose();
+    expect(wrapper.state().showInfoModal).toEqual(false);
+  });
+  it('It should redirect to homepage when handleSuccessClose is called from delete function', () => {
+    wrapper.setState({
+      backToHome: true,
+    });
     instance.handleSuccessClose();
     expect(wrapper.state().showInfoModal).toEqual(false);
   });
@@ -125,6 +144,13 @@ describe('ItemDetail with item which does not have description', () => {
       showConfirmModal: false,
       deleteItemInCategory: jest.fn(() => Promise.resolve()),
       getItemsInCategory: jest.fn(() => Promise.resolve()),
+      itemDetail: {
+        user: {
+          id: 1,
+        },
+        created_on: 'test',
+        updated_on: 'test',
+      },
     };
   };
   beforeEach(() => {
@@ -133,6 +159,16 @@ describe('ItemDetail with item which does not have description', () => {
     wrapper = shallow(<ItemDetail {...props} />);
   });
   it('It should notify that the item does not have description', async () => {
+    wrapper.setState({
+      ...wrapper.state(),
+      itemDetail: {
+        user: {
+          id: 1,
+        },
+        created_on: 'test',
+        updated_on: 'test',
+      },
+    });
     expect(wrapper.find('i').text()).toContain('No description');
   });
 });

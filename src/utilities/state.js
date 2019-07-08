@@ -9,4 +9,6 @@ export const initalItemState = {
   lastPage: 0,
 };
 
-export const initalUserState = {};
+export const initalUserState = {
+  loggedIn: false,
+};

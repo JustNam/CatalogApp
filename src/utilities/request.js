@@ -10,8 +10,7 @@ export const convertToRequest = (dict) => {
 
   return JSON.stringify(newDict);
 };
-
-export const callAPI = async (enpoint, method, body, customizedHeaders = {}) => {
+const callAPI = async (enpoint, method, body, customizedHeaders = {}) => {
   const defaultHeaders = {
     'Content-Type': 'application/json',
   };
@@ -60,6 +59,13 @@ export const callAPI = async (enpoint, method, body, customizedHeaders = {}) => 
   }
   const result = await fetch(envConfig.domain.concat(enpoint), config)
     .then(handleErrors)
-    .then(response => response.json());
+    .then(response => response.json())
+    .catch((error) => {
+      throw error;
+    });
   return result;
 };
+export const get = (enpoint, customizedHeaders) => callAPI(enpoint, 'GET', null, customizedHeaders);
+export const post = (enpoint, body, customizedHeaders) => callAPI(enpoint, 'POST', body, customizedHeaders);
+export const put = (enpoint, body, customizedHeaders) => callAPI(enpoint, 'PUT', body, customizedHeaders);
+export const remove = (enpoint, customizedHeaders) => callAPI(enpoint, 'DELETE', null, customizedHeaders);

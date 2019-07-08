@@ -68,6 +68,12 @@ describe('EditItemModal with valid data', () => {
       },
     });
     expect(wrapper.state().description.value).toBe('test');
+    instance.handleDescriptionChange({
+      target: {
+        value: '',
+      },
+    });
+    expect(wrapper.state().description.value).toBe(null);
   });
   it('It should show success modal if the data is valid', async () => {
     wrapper.setState({

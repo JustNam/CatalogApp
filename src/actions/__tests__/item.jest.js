@@ -6,7 +6,7 @@ import {
   createItemInCategory,
   editItemInCategory,
   deleteItemInCategory,
-} from '../item';
+} from 'actions/item';
 import {
   GET_ITEMS_IN_CATEGORY,
   GET_ITEMS_IN_CATEGORY_WITH_PAGINATION,
@@ -14,8 +14,8 @@ import {
   EDIT_ITEM_IN_CATEGORY,
   CREATE_ITEM_IN_CATEGORY,
   DELETE_ITEM_IN_CATEGORY,
-} from '../../constants/actionTypes';
-import { callAPI } from '../../utilities/request';
+} from 'constants/actionTypes';
+import { get, post, put, remove } from 'utilities/request';
 
 const mockStore = configureStore();
 
@@ -34,7 +34,7 @@ describe('Item actions', () => {
     expect(actions[0]).toMatchObject({
       type: GET_ITEMS_IN_CATEGORY,
       categoryId: 1,
-      promise: callAPI('/categories/1/items', 'GET'),
+      promise: get('/categories/1/items'),
     });
   });
 
@@ -46,7 +46,7 @@ describe('Item actions', () => {
     expect(actions[0]).toMatchObject({
       type: GET_ITEMS_IN_CATEGORY_WITH_PAGINATION,
       categoryId: 1,
-      promise: callAPI('/categories/1/items?page=1', 'GET'),
+      promise: get('/categories/1/items?page=1'),
     });
   });
 
@@ -57,7 +57,7 @@ describe('Item actions', () => {
     const actions = store.getActions();
     expect(actions[0]).toMatchObject({
       type: GET_ITEM_IN_CATEGORY,
-      promise: callAPI('/categories/1/items?page=1', 'GET'),
+      promise: get('/categories/1/items?page=1'),
     });
   });
 
@@ -72,7 +72,7 @@ describe('Item actions', () => {
     const actions = store.getActions();
     expect(actions[0]).toMatchObject({
       type: CREATE_ITEM_IN_CATEGORY,
-      promise: callAPI('/categories/1/items', 'POST'),
+      promise: post('/categories/1/items'),
     });
   });
 
@@ -87,7 +87,7 @@ describe('Item actions', () => {
     const actions = store.getActions();
     expect(actions[0]).toMatchObject({
       type: EDIT_ITEM_IN_CATEGORY,
-      promise: callAPI('/categories/1/items/1', 'PUT'),
+      promise: put('/categories/1/items/1'),
     });
   });
 
@@ -98,7 +98,7 @@ describe('Item actions', () => {
     const actions = store.getActions();
     expect(actions[0]).toMatchObject({
       type: DELETE_ITEM_IN_CATEGORY,
-      promise: callAPI('/categories/1/items/1', 'DELETE'),
+      promise: remove('/categories/1/items/1'),
     });
   });
 });

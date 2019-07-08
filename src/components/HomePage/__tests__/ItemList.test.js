@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ItemList from '../ItemList';
-import { item, category, itemWithEmptyCategory } from '../../../utilities/sampleData';
+import { ItemList } from 'components/HomePage/ItemList';
+import { item, category, itemWithEmptyCategory } from 'utilities/sampleData';
 
 describe('ItemList with full items', () => {
   let wrapper;
@@ -48,7 +48,7 @@ describe('ItemList with full items', () => {
 });
 
 
-describe('ItemList with shortage items', () => {
+describe('ItemList with lack of items', () => {
   let wrapper;
   let props;
   const setup = () => {
@@ -63,6 +63,10 @@ describe('ItemList with shortage items', () => {
   beforeEach(() => {
     setup();
     wrapper = shallow(<ItemList {...props} />);
+  });
+
+  it('It should show description which notifys that this category is empty', () => {
+    expect(wrapper.find('a[className="preview-link"]').text()).toContain('This category is empty.');
   });
 
   it('It should show description which notifys that this category is empty', () => {

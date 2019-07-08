@@ -1,7 +1,7 @@
 import configureStore from 'redux-mock-store';
 import { getCategories } from 'actions/category';
 import { GET_CATEGORIES } from 'constants/actionTypes';
-import { callAPI } from 'utilities/request';
+import { get } from 'utilities/request';
 
 const mockStore = configureStore();
 
@@ -14,7 +14,7 @@ describe('Category actions', () => {
     const actions = store.getActions();
     expect(actions[0]).toMatchObject({
       type: GET_CATEGORIES,
-      promise: callAPI('/categories', 'GET'),
+      promise: get('/categories'),
     });
   });
 });

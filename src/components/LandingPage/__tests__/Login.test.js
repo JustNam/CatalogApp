@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Login from '../Login';
+import { LoginPage } from 'components/LandingPage/Login';
 
 describe('Login with correct credentials', () => {
   let wrapper;
@@ -16,11 +16,14 @@ describe('Login with correct credentials', () => {
           data: '',
         },
       })),
+      user: {
+        loggedIn: false,
+      },
     };
   };
   beforeEach(() => {
     setup();
-    wrapper = shallow(<Login {...props} />);
+    wrapper = shallow(<LoginPage {...props} />);
     instance = wrapper.instance();
   });
   it('It should render correctly', () => {
@@ -42,11 +45,11 @@ describe('Login with correct credentials', () => {
     });
     expect(wrapper.state().password).toBe('test');
   });
-  it('It should redirect if the request is valid', async () => {
+  it('It should not show any error if the request is valid', async () => {
     await instance.handleSubmit({
       preventDefault: () => {},
     });
-    await expect(wrapper.state().redirect).toBe(true);
+    await expect(wrapper.state().error).toBe('');
   });
 });
 
@@ -68,13 +71,13 @@ describe('Login with input validations', () => {
   };
   beforeEach(() => {
     setup();
-    wrapper = shallow(<Login {...props} />);
+    wrapper = shallow(<LoginPage {...props} />);
     instance = wrapper.instance();
   });
   it('It should show error when is request is invalid', async () => {
     await instance.handleSubmit({
       preventDefault: () => {},
     });
-    await expect(wrapper.state().error).toBe(true);
+    await expect(wrapper.state().error).toBe('Can not get the data from server');
   });
 });

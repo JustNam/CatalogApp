@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Register from '../Register';
+import { RegisterPage } from 'components/LandingPage/Register';
 
 describe('Register with input validations', () => {
   let wrapper;
@@ -17,7 +17,7 @@ describe('Register with input validations', () => {
   };
   beforeEach(() => {
     setup();
-    wrapper = shallow(<Register {...props} />);
+    wrapper = shallow(<RegisterPage {...props} />);
     instance = wrapper.instance();
   });
 
@@ -124,7 +124,7 @@ describe('Register with input validations', () => {
       },
     });
     // Set confirm password
-    instance.handleConfirmPasswordChange({ 
+    instance.handleConfirmPasswordChange({
       target: {
         value: 'test',
       },
@@ -221,7 +221,9 @@ describe('Register with wrong input validations', () => {
     props = {
       signUp: jest.fn(() => Promise.resolve({
         payload: {
-          error: '1',
+          error: {
+            type: 'test',
+          },
         },
       })),
       username: {
@@ -234,10 +236,10 @@ describe('Register with wrong input validations', () => {
 
   beforeEach(() => {
     setup();
-    wrapper = shallow(<Register {...props} />);
+    wrapper = shallow(<RegisterPage {...props} />);
     instance = wrapper.instance();
   });
-  it('It should redirect when user signs up sucessfully', async () => {
+  it('It should  return error when the request is invalid', async () => {
     wrapper.setState({ isValidRequest: true });
     await instance.handleSubmit({
       preventDefault: () => {},
@@ -260,5 +262,35 @@ describe('Register with wrong input validations', () => {
       preventDefault: () => {},
     });
     expect(props.signUp).not.toHaveBeenCalled();
+  });
+});
+
+describe('', () => {
+  let wrapper;
+  let props;
+  let instance;
+  const setup = () => {
+    props = {
+      isValidRequest: true,
+      signUp: jest.fn(() => Promise.resolve({
+        payload: {
+          error: 'test',
+        },
+      })),
+    };
+  };
+
+  beforeEach(() => {
+    setup();
+    wrapper = shallow(<RegisterPage {...props} />);
+    instance = wrapper.instance();
+  });
+
+  it('It should return error when connection is failed', async () => {
+    wrapper.setState({ isValidRequest: true });
+    await instance.handleSubmit({
+      preventDefault: () => {},
+    });
+    expect(wrapper.state().username.errorMessages[0]).toBe('Can not get the data from server');
   });
 });

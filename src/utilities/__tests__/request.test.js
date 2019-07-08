@@ -1,4 +1,4 @@
-import { convertToRequest, callAPI } from '../request';
+import { convertToRequest, post, get, put, remove } from '../request';
 
 it('It should return correct string', () => {
   const dict = {
@@ -18,7 +18,7 @@ it('It should receive access token', async () => {
     password: 'nam123',
   };
   let response;
-  await callAPI('/login', 'POST', body).then((data) => {
+  await post('/login', body).then((data) => {
     response = { ...data };
   });
   expect(response).toHaveProperty('access_token');
@@ -29,17 +29,17 @@ it('It should receive correct data', async () => {
     username: 'nam123',
     password: 'nam123',
   };
-  await callAPI('/login', 'POST', body).then((data) => {
+  await post('/login', body).then((data) => {
     localStorage.setItem('accessToken', data.access_token);
   });
   const props = ['created_on', 'id', 'name', 'updated_on', 'user'];
-  await callAPI('/categories', 'GET').then((response) => {
+  await get('/categories').then((response) => {
     expect(response[0]).toHaveProperty(...props);
   });
 });
 it('It should handle error when it occurs', async () => {
   const body = '<html></html>';
-  await callAPI('/login', 'POST', body, { 'Content-Type': 'text/html' }).catch(
+  await post('/login', body, { 'Content-Type': 'text/html' }).catch(
     (error) => {
       expect(error.status).toBe(400);
     }

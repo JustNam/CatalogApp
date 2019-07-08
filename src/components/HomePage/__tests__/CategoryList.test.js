@@ -1,10 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import CategoryList from 'components/HomePage';
+import { CategoryList } from 'components/HomePage/CategoryList';
 import { category } from 'utilities/sampleData';
-
-// import { configure } from 'enzyme';
-// import Adapter from 'enzyme-adapter-react-16';
 
 // configure({ adapter: new Adapter() });
 describe('/components/CategoryList', () => {
@@ -30,7 +27,7 @@ describe('/components/CategoryList', () => {
     expect(props.getItemsInCategoryWithPagination).toBeCalled();
   });
   it('It should get the items in another category when another tab is clicked', () => {
-    wrapper.find('[tabFor="vertical-tab-0"]').simulate('click', {
+    wrapper.find('[tabFor="vertical-tab-1"]').simulate('click', {
       preventDefault: () => {},
     });
     expect(props.getItemsInCategoryWithPagination.mock.calls.length).toBe(2);

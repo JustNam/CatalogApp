@@ -6,40 +6,39 @@ import {
   DELETE_ITEM_IN_CATEGORY,
   GET_ITEMS_IN_CATEGORY_WITH_PAGINATION,
 } from 'constants/actionTypes';
-import { callAPI } from '../utilities/request';
+import { get, put, post, remove } from '../utilities/request';
 
 export const getItemsInCategory = categoryId => ({
   type: GET_ITEMS_IN_CATEGORY,
   categoryId,
-  promise: callAPI(`/categories/${categoryId}/items`, 'GET'),
+  promise: get(`/categories/${categoryId}/items`),
 });
 
 export const getItemsInCategoryWithPagination = (categoryId, page) => ({
   type: GET_ITEMS_IN_CATEGORY_WITH_PAGINATION,
   categoryId,
-  promise: callAPI(`/categories/${categoryId}/items?page=${page}`, 'GET'),
+  promise: get(`/categories/${categoryId}/items?page=${page}`),
 });
 
 export const getItemInCategory = (categoryId, itemId) => ({
   type: GET_ITEM_IN_CATEGORY,
-  promise: callAPI(`/categories/${categoryId}/items/${itemId}`, 'GET'),
+  promise: get(`/categories/${categoryId}/items/${itemId}`),
 });
 
 export const createItemInCategory = (categoryId, payload) => ({
   type: CREATE_ITEM_IN_CATEGORY,
-  promise: callAPI(`/categories/${categoryId}/items`, 'POST', payload),
+  promise: post(`/categories/${categoryId}/items`, payload),
 });
 
 export const editItemInCategory = (categoryId, payload) => ({
   type: EDIT_ITEM_IN_CATEGORY,
-  promise: callAPI(
+  promise: put(
     `/categories/${categoryId}/items/${payload.id}`,
-    'PUT',
     payload
   ),
 });
 
 export const deleteItemInCategory = (categoryId, itemId) => ({
   type: DELETE_ITEM_IN_CATEGORY,
-  promise: callAPI(`/categories/${categoryId}/items/${itemId}`, 'DELETE'),
+  promise: remove(`/categories/${categoryId}/items/${itemId}`),
 });

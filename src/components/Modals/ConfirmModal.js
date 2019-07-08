@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
 
-class ConfirmModal extends Component {
+export class ConfirmModal extends Component {
   render() {
     const { handleClose, handleConfirm } = this.props;
     return (

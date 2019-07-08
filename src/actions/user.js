@@ -1,5 +1,5 @@
-import { LOGIN, SIGNUP } from 'constants/actionTypes';
-import { callAPI } from 'utilities/request';
+import { LOGIN, SIGNUP, LOGOUT } from 'constants/actionTypes';
+import { post } from 'utilities/request';
 
 export const login = (username, password) => {
   const payload = {
@@ -8,7 +8,7 @@ export const login = (username, password) => {
   };
   return {
     type: LOGIN,
-    promise: callAPI('/login', 'POST', payload),
+    promise: post('/login', payload),
   };
 };
 
@@ -19,6 +19,10 @@ export const signUp = (username, password) => {
   };
   return {
     type: SIGNUP,
-    promise: callAPI('/users', 'POST', payload),
+    promise: post('/users', payload),
   };
 };
+
+export const logOut = () => ({
+  type: LOGOUT,
+});

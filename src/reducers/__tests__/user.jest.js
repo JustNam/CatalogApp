@@ -1,5 +1,5 @@
 import { initalUserState } from '../../utilities/state';
-import { LOGIN, SIGNUP } from '../../constants/actionTypes';
+import { LOGIN, SIGNUP, LOGOUT } from '../../constants/actionTypes';
 import userReducer from '../user';
 
 it('It should assign user creadentials to localStorage', () => {
@@ -38,6 +38,18 @@ it('It should not set any item in localStorage when users login failed', () => {
     type: LOGIN,
     payload: {
     },
+  });
+  expect(localStorage.getItem('accessToken')).toBe(null);
+  expect(localStorage.getItem('username')).toBe(null);
+  expect(localStorage.getItem('userId')).toBe(null);
+});
+
+it('It should not set any item in localStorage when users log out', () => {
+  localStorage.setItem('accessToken', 'test');
+  localStorage.setItem('username', 'test');
+  localStorage.setItem('userId', 'test');
+  userReducer(initalUserState, {
+    type: LOGOUT,
   });
   expect(localStorage.getItem('accessToken')).toBe(null);
   expect(localStorage.getItem('username')).toBe(null);

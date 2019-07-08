@@ -6,7 +6,7 @@ import ItemDetail from 'components/Item';
 import RegisterPage from 'components/LandingPage/Register';
 import { connect } from 'react-redux';
 
-class Main extends Component {
+export class Main extends Component {
   render() {
     // Redirect to /categories if the URL does not match any route
     const userRoutes = [

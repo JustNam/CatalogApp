@@ -1,5 +1,5 @@
 
-import { LOGIN } from '../constants/actionTypes';
+import { LOGIN, LOGOUT } from '../constants/actionTypes';
 import { initalUserState } from '../utilities/state';
 
 export default (state = { ...initalUserState }, action) => {
@@ -11,9 +11,19 @@ export default (state = { ...initalUserState }, action) => {
         localStorage.setItem('accessToken', data.access_token);
         localStorage.setItem('username', data.username);
         localStorage.setItem('userId', data.user_id);
-        return state;
+        return {
+          ...state,
+          loggedIn: true,
+        };
       }
       return state;
+    }
+    case LOGOUT: {
+      localStorage.clear();
+      return {
+        ...state,
+        loggedIn: false,
+      };
     }
     default:
       return state;

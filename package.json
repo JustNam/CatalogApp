@@ -112,7 +112,12 @@
     "coveragePathIgnorePatterns": [
       "src/index.js",
       "src/configurations/*",
-      "src/components/App.js"
+      "src/components/App.js",
+      "src/components/Item/index.js",
+      "src/components/HomePage/index.js",
+      "src/components/LandingPage/index.js",
+      "src/reducers/index.js",
+      "src/store.js"
     ],
     "setupFiles": [
       "react-app-polyfill/jsdom"
