@@ -1,35 +1,28 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { editItemInCategory } from 'actions/item';
+import { createItemInCategory, getItemsInCategoryWithPagination } from 'actions/item';
 import { validateItemTitle } from 'utilities/validate';
 
-class EditItemModal extends Component {
+export class CreateItemModal extends Component {
   constructor(props) {
     super(props);
-    const { item } = props;
     this.state = {
       isValidRequest: false,
       title: {
-        value: item.title,
+        value: '',
         isValid: false,
         errorMessages: [],
       },
       description: {
-        value: item.description,
+        value: '',
       },
       // Attribute for <input/> element
       titleInputProps: {
         isValid: null,
         isInvalid: null,
       },
-      itemId: item.id,
     };
-  }
-
-  componentDidMount() {
-    // Validate of current title
-    this.validateData(this.state.title);
   }
 
   // Update UI of title input
@@ -66,21 +59,28 @@ class EditItemModal extends Component {
 
   // Update title from input and trigger validadtions
   handleTitleChange = (e) => {
-    const { title } = this.state;
-    title.value = e.target.value;
-    if (title.value === '') {
+    const value = e.target.value;
+    if (value === '') {
+      this.setState({
+        title: {
+          value: '',
+          isValid: false,
+          errorMessages: [],
+        },
+      });
       this.resetTitleInputProps();
     } else {
-      this.validateData(title);
+      // Can not use this assignment when the input is empty
+      const newTitle = {
+        ...this.state.title,
+        value,
+      };
+      this.validateData(newTitle);
     }
   };
 
   handleDescriptionChange = (e) => {
-    if (e.target.value) {
-      this.setState({ description: { value: e.target.value } });
-    } else {
-      this.setState({ description: { value: null } });
-    }
+    this.setState({ description: { value: e.target.value } });
   };
 
   handleSubmit = (e) => {
@@ -89,14 +89,12 @@ class EditItemModal extends Component {
       title,
       description,
       isValidRequest,
-      itemId,
     } = this.state;
     // Validate by front-end
     if (isValidRequest) {
-      // Edit an item
+      // Submit new item information
       this.props
-        .editItemInCategory(this.props.currentCategoryId, {
-          id: itemId,
+        .createItemInCategory(this.props.currentCategoryId, {
           title: title.value.trim(),
           description: description.value,
         })
@@ -112,7 +110,7 @@ class EditItemModal extends Component {
             this.updateTitleInputProps(false);
           } else {
             this.props.showSuccessModal();
-            this.props.handleClose();
+            this.props.getItemsInCategoryWithPagination(this.props.currentCategoryId, 1);
           }
         });
     }
@@ -127,7 +125,7 @@ class EditItemModal extends Component {
         onHide={this.props.handleClose}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit item</Modal.Title>
+          <Modal.Title>Create new item</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={this.handleSubmit}>
@@ -161,7 +159,8 @@ class EditItemModal extends Component {
                 value={description.value}
               />
             </Form.Group>
-            <Button type="submit">Edit</Button>
+            <Button type="submit">Create</Button>
+
           </Form>
         </Modal.Body>
       </Modal>
@@ -170,11 +169,11 @@ class EditItemModal extends Component {
 }
 
 const mapDispatchToProp = {
-  editItemInCategory,
+  createItemInCategory,
+  getItemsInCategoryWithPagination,
 };
-export { EditItemModal };
 
 export default connect(
   null,
   mapDispatchToProp
-)(EditItemModal);
+)(CreateItemModal);

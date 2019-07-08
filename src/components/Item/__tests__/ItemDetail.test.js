@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ItemDetail from '../ItemDetail';
+import ItemDetail from '..';
 import { item, itemWithEmptyCategory, noDescriptionItem } from '../../../utilities/sampleData';
 
 

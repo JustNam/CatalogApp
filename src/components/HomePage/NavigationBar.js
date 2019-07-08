@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import 'styles/login.css';
+import { connect } from 'react-redux';
 import { NavDropdown } from 'react-bootstrap';
-import { withRouter } from 'react-router-dom';
+import { getItemsInCategoryWithPagination } from 'actions/item';
+import { withRouter, Link } from 'react-router-dom';
+import { logOut } from 'actions/user';
 
 export class NavigationBar extends Component {
-   logOut = () => {
-     const { history } = this.props;
-     localStorage.removeItem('accessToken');
-     localStorage.removeItem('username');
-     localStorage.removeItem('userId');
-     history.push('/login');
+   reload = () => {
+     const { category } = this.props;
+     let id = parseInt(localStorage.getItem('categoryId'));
+     if (!id) {
+       id = category.data[0].id;
+     }
+     this.props.getItemsInCategoryWithPagination(id, 1);
    }
 
    render() {
@@ -19,21 +23,30 @@ export class NavigationBar extends Component {
          <ul className="navbar-nav">
            <li className="nav-item active">
              <h1>
-               <a className="navbar-brand" href="/categories">
+               <Link className="navbar-brand" onClick={this.reload} to="/categories">
                  Catalog App
-               </a>
+               </Link>
              </h1>
            </li>
          </ul>
          <ul className="navbar-nav ml-auto">
            <NavDropdown title={username} id="basic-nav-dropdown">
              <NavDropdown.Divider />
-             <NavDropdown.Item onClick={this.logOut}>Log out</NavDropdown.Item>
+             <NavDropdown.Item onClick={this.props.logOut}>Log out</NavDropdown.Item>
            </NavDropdown>
          </ul>
        </nav>
      );
    }
 }
+function mapStateToProps(state) {
+  return {
+    category: state.category,
+  };
+}
+const mapDispatchToProp = {
+  getItemsInCategoryWithPagination,
+  logOut,
+};
 
-export default withRouter(NavigationBar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProp)(NavigationBar));

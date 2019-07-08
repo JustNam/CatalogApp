@@ -2,14 +2,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { getCategories } from 'actions/category';
 import { login, signUp } from 'actions/user';
-import Main from './Main';
 import {
   getItemsInCategory,
   getItemInCategory,
   createItemInCategory,
   deleteItemInCategory,
   getItemsInCategoryWithPagination,
-} from '../actions/item';
+} from 'actions/item';
+import Main from './Main';
 
 function mapStateToProp(state) {
   return {

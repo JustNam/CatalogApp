@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { login } from 'actions/user';
+import { withRouter } from 'react-router';
 
 class LoginPage extends Component {
   constructor(props) {
@@ -8,8 +11,7 @@ class LoginPage extends Component {
     this.state = {
       username: '',
       password: '',
-      redirect: false,
-      error: false,
+      error: '',
     };
   }
 
@@ -21,23 +23,26 @@ class LoginPage extends Component {
     this.setState({ password: e.target.value });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     const { username, password } = this.state;
-    this.props.login(username, password).then((response) => {
+    await this.props.login(username, password).then((response) => {
       if (response.payload.error) {
-        this.setState({ error: true });
-      } else {
-        this.setState({ redirect: true });
+        if (response.payload.error.type) {
+          this.setState({
+            error: 'Invalid username or password',
+          });
+        } else {
+          this.setState({
+            error: 'Can not get the data from server',
+          });
+        }
       }
     });
   };
 
   render() {
-    const { username, password, redirect, error } = this.state;
-    if (redirect) {
-      return <Redirect to="/categories" />;
-    }
+    const { username, password, error } = this.state;
     return (
       <div className="container">
         <div className="row">
@@ -54,7 +59,7 @@ class LoginPage extends Component {
                   )}
                   {error && (
                     <div className="invalid-credential">
-                      Invalid username or password
+                      {error}
                     </div>
                   )}
                   <div className="form-label-group">
@@ -106,4 +111,14 @@ class LoginPage extends Component {
     );
   }
 }
-export default LoginPage;
+
+const mapDispatchToProp = {
+  login,
+};
+
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProp
+  )(LoginPage)
+);

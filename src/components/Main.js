@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import LoginPage from 'components/LandingPage/Login';
-import CategoryList from 'components/HomePage/CategoryList';
-import ItemDetail from 'components/Item/ItemDetail';
+import LoginPage from 'components/LandingPage';
+import CategoryList from 'components/HomePage';
+import ItemDetail from 'components/Item';
 import RegisterPage from 'components/LandingPage/Register';
+import { connect } from 'react-redux';
 
 class Main extends Component {
   render() {
@@ -29,19 +30,19 @@ class Main extends Component {
         path="/signup"
         key="register"
         render={() => (
-          <RegisterPage {...this.props} />
+          <RegisterPage />
         )}
       />,
       <Route
         path="/login"
         key="login"
         render={() => (
-          <LoginPage {...this.props} />
+          <LoginPage />
         )}
       />,
       <Redirect key="redirect-login" to="/login" />,
     ];
-    if (localStorage.getItem('accessToken')) {
+    if (this.props.user.loggedIn) {
       return (
         <Switch>
           {userRoutes}
@@ -56,4 +57,10 @@ class Main extends Component {
   }
 }
 
-export default Main;
+function mapStateToProp(state) {
+  return {
+    user: state.user,
+  };
+}
+
+export default connect(mapStateToProp, null)(Main);

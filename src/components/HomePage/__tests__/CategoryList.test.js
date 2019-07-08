@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import CategoryList from 'components/HomePage/CategoryList';
+import CategoryList from 'components/HomePage';
 import { category } from 'utilities/sampleData';
 
 // import { configure } from 'enzyme';

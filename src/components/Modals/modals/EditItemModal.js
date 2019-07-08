@@ -1,28 +1,35 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { createItemInCategory } from 'actions/item';
+import { editItemInCategory } from 'actions/item';
 import { validateItemTitle } from 'utilities/validate';
 
-class CreateItemModal extends Component {
+export class EditItemModal extends Component {
   constructor(props) {
     super(props);
+    const { item } = props;
     this.state = {
       isValidRequest: false,
       title: {
-        value: '',
+        value: item.title,
         isValid: false,
         errorMessages: [],
       },
       description: {
-        value: '',
+        value: item.description,
       },
       // Attribute for <input/> element
       titleInputProps: {
         isValid: null,
         isInvalid: null,
       },
+      itemId: item.id,
     };
+  }
+
+  componentDidMount() {
+    // Validate of current title
+    this.validateData(this.state.title);
   }
 
   // Update UI of title input
@@ -59,28 +66,21 @@ class CreateItemModal extends Component {
 
   // Update title from input and trigger validadtions
   handleTitleChange = (e) => {
-    const value = e.target.value;
-    if (value === '') {
-      this.setState({
-        title: {
-          value: '',
-          isValid: false,
-          errorMessages: [],
-        },
-      });
+    const { title } = this.state;
+    title.value = e.target.value;
+    if (title.value === '') {
       this.resetTitleInputProps();
     } else {
-      // Can not use this assignment when the input is empty
-      const newTitle = {
-        ...this.state.title,
-        value,
-      };
-      this.validateData(newTitle);
+      this.validateData(title);
     }
   };
 
   handleDescriptionChange = (e) => {
-    this.setState({ description: { value: e.target.value } });
+    if (e.target.value) {
+      this.setState({ description: { value: e.target.value } });
+    } else {
+      this.setState({ description: { value: null } });
+    }
   };
 
   handleSubmit = (e) => {
@@ -89,12 +89,14 @@ class CreateItemModal extends Component {
       title,
       description,
       isValidRequest,
+      itemId,
     } = this.state;
     // Validate by front-end
     if (isValidRequest) {
-      // Submit new item information
+      // Edit an item
       this.props
-        .createItemInCategory(this.props.currentCategoryId, {
+        .editItemInCategory(this.props.currentCategoryId, {
+          id: itemId,
           title: title.value.trim(),
           description: description.value,
         })
@@ -125,7 +127,7 @@ class CreateItemModal extends Component {
         onHide={this.props.handleClose}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Create new item</Modal.Title>
+          <Modal.Title>Edit item</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={this.handleSubmit}>
@@ -159,8 +161,7 @@ class CreateItemModal extends Component {
                 value={description.value}
               />
             </Form.Group>
-            <Button type="submit">Create</Button>
-
+            <Button type="submit">Edit</Button>
           </Form>
         </Modal.Body>
       </Modal>
@@ -169,11 +170,10 @@ class CreateItemModal extends Component {
 }
 
 const mapDispatchToProp = {
-  createItemInCategory,
+  editItemInCategory,
 };
 
 export default connect(
   null,
   mapDispatchToProp
-)(CreateItemModal);
-export { CreateItemModal };
+)(EditItemModal);

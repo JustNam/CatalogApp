@@ -1,7 +1,10 @@
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { validateUsername } from 'utilities/validate';
+import { signUp } from 'actions/user';
+import { withRouter } from 'react-router';
 
 class RegisterPage extends Component {
   constructor(props) {
@@ -146,12 +149,21 @@ class RegisterPage extends Component {
       await this.props.signUp(username.value, password)
         .then((response) => {
           if (response.payload.error) {
-            this.setState({
-              username: {
-                ...username,
-                errorMessages: ['The username already exists'],
-              },
-            });
+            if (response.payload.error.type) {
+              this.setState({
+                username: {
+                  ...username,
+                  errorMessages: ['The username already exists'],
+                },
+              });
+            } else {
+              this.setState({
+                username: {
+                  ...username,
+                  errorMessages: ['Can not get the data from server'],
+                },
+              });
+            }
             this.updateUsernameInputProps(false);
             this.setState({ test: 'true' });
           } else {
@@ -274,4 +286,13 @@ class RegisterPage extends Component {
   }
 }
 
-export default RegisterPage;
+const mapDispatchToProp = {
+  signUp,
+};
+
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProp
+  )(RegisterPage)
+);

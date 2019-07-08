@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { ButtonToolbar, Button } from 'react-bootstrap';
-import EditItemModal from '../Modals/EditItemModal';
-import SuccessModal from '../Modals/SuccessModal';
-import ConfirmModal from '../Modals/ConfirmModal';
-import NavigationBar from '../HomePage/NavigationBar';
-import { historyWithRefresh } from '../../history';
+import EditItemModal from 'components/Modals/EditItemModal';
+import SuccessModal from 'components/Modals/SuccessModal';
+import ConfirmModal from 'components/Modals/ConfirmModal';
+import NavigationBar from 'components/HomePage/NavigationBar';
+import { getItemInCategory, deleteItemInCategory } from 'actions/item';
+import history from '../../history';
 
 class ItemDetail extends Component {
   constructor(props) {
@@ -56,9 +58,10 @@ class ItemDetail extends Component {
     const { categoryId, itemId } = this.state;
     this.setState({ showSuccessModal: false });
     if (this.state.backToHome) {
-      historyWithRefresh.push('/categories');
+      history.push('/categories');
     } else {
-      historyWithRefresh.push(`/categories/${categoryId}/items/${itemId}`);
+      history.push(`/categories/${categoryId}/items/${itemId}`);
+      this.componentDidMount();
     }
   };
 
@@ -140,4 +143,17 @@ class ItemDetail extends Component {
     return <div><NavigationBar /></div>;
   }
 }
-export default ItemDetail;
+
+function mapStateToProp(state) {
+  return {
+    category: state.category,
+    item: state.item,
+  };
+}
+
+const mapDispatchToProp = {
+  getItemInCategory,
+  deleteItemInCategory,
+};
+
+export default connect(mapStateToProp, mapDispatchToProp)(ItemDetail);

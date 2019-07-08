@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 import { Pagination } from 'react-bootstrap';
 import CreateItemModal from 'components/Modals/CreateItemModal';
 import SuccessModal from 'components/Modals/SuccessModal';
-import { historyWithRefresh } from '../../history';
-
+import { getCategories } from 'actions/category';
+import { getItemsInCategoryWithPagination } from 'actions/item';
+import { connect } from 'react-redux';
+import history from '../../history';
 
 class ItemList extends Component {
   constructor(props) {
@@ -34,7 +36,8 @@ class ItemList extends Component {
 
   handleSuccessClose = () => {
     this.setState({ showSuccessModal: false });
-    historyWithRefresh.push('/categories');
+    this.handleInfoClose();
+    history.push('/categories');
   };
 
   getNewPage = (page) => {
@@ -173,5 +176,14 @@ class ItemList extends Component {
     );
   }
 }
-
-export default ItemList;
+function mapStateToProps(state) {
+  return {
+    category: state.category,
+    item: state.item,
+  };
+}
+const mapDispatchToProps = {
+  getCategories,
+  getItemsInCategoryWithPagination,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

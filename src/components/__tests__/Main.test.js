@@ -3,9 +3,9 @@ import { Route } from 'react-router-dom';
 import { shallow } from 'enzyme';
 import Main from '../Main';
 import Register from '../LandingPage/Register';
-import Login from '../LandingPage/Login';
-import ItemDetail from '../Item/ItemDetail';
-import CategoryList from '../HomePage/CategoryList';
+import Login from '../LandingPage';
+import ItemDetail from '../Item';
+import CategoryList from '../HomePage';
 
 let pathMap = {};
 describe('Main for guests', () => {
