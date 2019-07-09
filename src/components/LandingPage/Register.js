@@ -157,7 +157,6 @@ export class RegisterPage extends Component {
                 },
               });
             } else {
-              
               this.setState({
                 username: {
                   ...username,
@@ -166,9 +165,7 @@ export class RegisterPage extends Component {
               });
             }
             this.updateUsernameInputProps(false);
-            this.setState({ test: 'true' });
           } else {
-            this.setState({ test: 'false' });
             this.setState({ redirect: true });
           }
         });
@@ -183,7 +180,6 @@ export class RegisterPage extends Component {
       redirect,
       usernameInputProps,
       passwordInputProps,
-      test,
     } = this.state;
     if (redirect) {
       return (
@@ -196,7 +192,6 @@ export class RegisterPage extends Component {
     }
     return (
       <div className="container">
-        <div>{test}</div>
         <div className="row">
           <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div className="card card-signin my-5">
