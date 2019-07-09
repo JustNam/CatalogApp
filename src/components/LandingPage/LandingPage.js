@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { login } from 'actions/user';
 import { withRouter } from 'react-router';
+import history from '../../history';
 
 export class LandingPage extends Component {
   constructor(props) {
@@ -39,6 +40,10 @@ export class LandingPage extends Component {
       }
     });
   };
+
+  routeChange = () => {
+    history.push('/signup');
+  }
 
   render() {
     const { username, password, error } = this.state;
@@ -95,7 +100,7 @@ export class LandingPage extends Component {
                     Log in
                   </button>
                   <Button
-                    href="/signup"
+                    onClick={this.routeChange}
                     className="btn btn-lg btn-outline-secondary btn-block text-uppercase"
                     type="button"
                   >

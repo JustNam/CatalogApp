@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { validateUsername } from 'utilities/validate';
 import { signUp } from 'actions/user';
 import { withRouter } from 'react-router';
+import history from '../../history';
 
 export class RegisterPage extends Component {
   constructor(props) {
@@ -29,6 +30,10 @@ export class RegisterPage extends Component {
       },
       redirect: false,
     };
+  }
+
+  routeChange = () => {
+    history.push('/login');
   }
 
   updateUsernameInputProps = (validity) => {
@@ -266,7 +271,7 @@ export class RegisterPage extends Component {
                     Submit
                   </button>
                   <Button
-                    href="/login"
+                    onClick={this.routeChange}
                     className="btn btn-lg btn-outline-secondary btn-block text-uppercase"
                     type="button"
                   >
